@@ -26,6 +26,10 @@ call plug#end()
 
 let mapleader="\<Space>"
 
+" show hidden characters
+"set list
+"set listchars=tab:→\ ,space:·,nbsp:␣,trail:•,eol:¶,precedes:«,extends:»
+
 set number relativenumber
 
 if (has("termguicolors"))
@@ -40,12 +44,6 @@ let g:airline_powerline_fonts = 1
 imap fd <Esc>
 autocmd InsertEnter * set timeoutlen=200
 autocmd InsertLeave * set timeoutlen=1000
-
-" keybinds for buffer navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-H> <C-W><C-H>
-nnoremap <C-L> <C-W><C-L>
 
 " YCM config
 " uses compilation database it can find, sucks on header only libraries
@@ -79,8 +77,8 @@ nnoremap <Leader>t :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
 " CtrlP
-nnoremap <leader>o :CtrlP<CR>
-nnoremap <leader>i :CtrlPBuffer<CR>
+nnoremap <leader>ff :CtrlP<CR>
+nnoremap <leader>bb :CtrlPBuffer<CR>
 
 " clang-format
 nnoremap <Leader>cf :ClangFormat<CR>
