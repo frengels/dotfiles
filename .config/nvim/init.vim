@@ -21,17 +21,27 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'rhysd/vim-clang-format'
 Plug 'flazz/vim-colorschemes'
+Plug 'colepeters/spacemacs-theme.vim'
 call plug#end()
 
-let mapleader=";"
+let mapleader="\<Space>"
 
-set number
-colorscheme wombat256mod
+set number relativenumber
+
+if (has("termguicolors"))
+    set termguicolors
+endif
+set background=dark
+colorscheme spacemacs-theme
 
 let g:airline_powerline_fonts = 1
 
-" keybinds for buffer navigation
+" escape insert mode by quickly typing fd
+imap fd <Esc>
+autocmd InsertEnter * set timeoutlen=200
+autocmd InsertLeave * set timeoutlen=1000
 
+" keybinds for buffer navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
@@ -49,8 +59,23 @@ nnoremap <Leader>yt :YcmCompleter GetType<CR>
 nnoremap <Leader>yo :YcmCompleter GetDoc<CR>
 nnoremap <Leader>yp :YcmCompleter GetDocImprecise<CR>
 
+" Window movement
+nnoremap <Leader>wd :q<CR>
+nnoremap <Leader>wh :wincmd h<CR>
+nnoremap <Leader>wj :wincmd j<CR>
+nnoremap <Leader>wk :wincmd k<CR>
+nnoremap <Leader>wl :wincmd l<CR>
+
+nnoremap <Leader>w/ :vsplit<CR>
+nnoremap <Leader>w- :split<CR>
+
+" resize windows
+nnoremap <A-l> :wincmd ><CR>
+nnoremap <A-h> :wincmd <<CR>
+
+
 " NERDTree config
-nnoremap <Leader>t :NERDTree<CR>
+nnoremap <Leader>t :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
 " CtrlP
