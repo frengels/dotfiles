@@ -1,1 +1,5 @@
-gtk-cursor-theme-name = Adwaita
+gtk-cursor-theme-name = "Adwaita"
+gtk-cursor-theme-size = 16
+gtk-theme-name = "Arc-Dark"
+gtk-icon-theme-name = "Arc"
+gtk-font-name = "Fira Sans 13"
