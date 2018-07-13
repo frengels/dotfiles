@@ -21,7 +21,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'rhysd/vim-clang-format'
 Plug 'flazz/vim-colorschemes'
-Plug 'colepeters/spacemacs-theme.vim'
+Plug 'Dreyri/spacemacs-theme.vim'
 call plug#end()
 
 let mapleader="\<Space>"
