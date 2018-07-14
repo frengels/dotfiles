@@ -64,8 +64,14 @@ nnoremap <Leader>wj :wincmd j<CR>
 nnoremap <Leader>wk :wincmd k<CR>
 nnoremap <Leader>wl :wincmd l<CR>
 
+nnoremap <Leader>wH :wincmd H<CR>
+nnoremap <Leader>wJ :wincmd J<CR>
+nnoremap <Leader>wK :wincmd K<CR>
+nnoremap <Leader>wL :wincmd L<CR>
+
 nnoremap <Leader>w/ :vsplit<CR>
 nnoremap <Leader>w- :split<CR>
+
 
 " resize windows
 nnoremap <A-l> :wincmd ><CR>
