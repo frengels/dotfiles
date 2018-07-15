@@ -163,7 +163,7 @@ File navigation with evil
 **** Window
      
 All actions related to handling windows.
-Settings for keybind "wa" at [[ace-window]]
+Settings for keybind "wa" at ace-window.
 
 Window creation.
 
@@ -205,7 +205,6 @@ Open the config.org file
 
 ** Ace Window
 
-<<ace-window>>
 Always dispatch to ace-window rather than using other-window for 2 windows
 
 #+BEGIN_SRC emacs-lisp
