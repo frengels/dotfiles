@@ -1,0 +1,177 @@
+#+TITLE: Emacs configuration file
+#+AUTHOR: Frederik Engels
+#+BABEL: :cache yes
+#+LATEX_HEADER: \usepackage{parskip}
+#+LATEX_HEADER: \usepackage[utf8]{inputenc}
+#+PROPERTY: header-args :tangle yes
+
+* About
+My personal init.el file, I'm still new at this
+
+* Setup
+Automatically tangle after every save
+
+#+BEGIN_SRC emacs-lisp
+(defun tangle-init()
+  "Tangle if the current file is init.org"
+  (when (equal (buffer-file-name)
+               (expand-file-name (concat user-emacs-directory "settings.org")))
+    (let ((prog-mode-hook nil))
+      (org-babel-tangle)
+      (byte-compile-file (concat user-emacs-directory "settings.el")))))
+
+(add-hook 'after-save-hook 'tangle-init)
+#+END_SRC
+
+* Packages
+
+Use =package= to simplify managing extensions
+=cl= adds a lot of handy functions from common lisp.
+
+Use [[http://melpa.org/#/][melpa]] for packages
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+(package-initialize)
+(package-refresh-contents)
+#+END_SRC
+
+#+RESULTS:
+
+Function to check if packages are installed
+
+#+BEGIN_SRC emacs-lisp
+(defun ensure-package-installed (&rest packages)
+  (mapcar
+    (lambda (package)
+      (unless (package-installed-p package)
+        (package-install package)))
+    packages))
+#+END_SRC
+
+Packages we want to have
+
+#+BEGIN_SRC emacs-lisp
+(ensure-package-installed 
+  'auto-compile
+  'company
+  'evil
+  'evil-escape
+  'evil-surround
+  'idle-require
+  'helm
+  'helm-company
+  'helm-dash
+  'helm-projectile
+  'jedi
+  'linum-relative
+  'linum-off
+  'magit
+  'markdown-mode
+  'material-theme
+  'org
+  'org-ref
+  'powerline
+  'projectile
+  'spacemacs-theme
+  'slime)
+#+END_SRC
+
+* Style
+
+Disable the menu bar, scroll bar and tool bar
+
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+(toggle-scroll-bar -1)
+(tool-bar-mode -1)
+#+END_SRC
+
+Set Fira Mono as font.
+I will replace this with Fira Code once emacs supports ligatures.
+
+#+BEGIN_SRC emacs-lisp
+(set-frame-font "Fira Mono 11")
+#+END_SRC
+
+Use the spacemacs theme because I like it
+#+BEGIN_SRC emacs-lisp
+(load-theme 'spacemacs-dark)
+#+END_SRC
+
+Answer y or n rather than yes or no
+
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
+Enable UTF8 by default
+
+#+BEGIN_SRC emacs-lisp
+(set-language-environment "UTF-8")
+#+END_SRC
+
+* Configuration
+
+Configuration for individual packages
+
+** Evil
+   
+Enable evil mode
+
+#+BEGIN_SRC emacs-lisp
+(require 'evil)
+(evil-mode 1)
+#+END_SRC
+
+*** Surround
+
+#+BEGIN_SRC emacs-lisp
+(global-evil-surround-mode)
+#+END_SRC
+
+*** Escape
+
+#+BEGIN_SRC emacs-lisp
+(evil-escape-mode)
+(setq-default evil-escape-key-sequence "fd")
+(setq-default evil-escape-delay 0.15)
+#+END_SRC
+** Linum
+
+Enable lines numbers in the gutter
+
+#+BEGIN_SRC emacs-lisp
+(linum-mode)
+(linum-relative-mode)
+(setq linum-relative-current-symbol "")
+#+END_SRC
+
+Enable linum everywhere and turn it off for certain modes
+and files over 3MB large
+
+#+BEGIN_SRC emacs-lisp
+(require 'linum-off)
+#+END_SRC
+
+** Company
+
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
+** Helm
+
+#+BEGIN_SRC emacs-lisp
+(require 'helm)
+(require 'helm-config)
+#+END_SRC
+** Powerline
+
+#+BEGIN_SRC emacs-lisp
+(require 'powerline)
+(powerline-default-theme)
+#+END_SRC
+
