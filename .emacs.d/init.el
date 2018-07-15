@@ -9,7 +9,8 @@
  '(line-number-mode nil)
  '(package-selected-packages
    (quote
-    (linum-off linum-relative spacemacs-theme slime powerline org-ref material-theme markdown-mode magit jedi idle-require helm-projectile helm-dash helm-company evil-surround evil-escape auto-compile))))
+    (ace-window which-key evil-leader linum-off linum-relative spacemacs-theme slime powerline org-ref material-theme markdown-mode magit jedi idle-require helm-projectile helm-dash helm-company evil-surround evil-escape auto-compile)))
+ '(projectile-mode t nil (projectile)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -17,4 +18,4 @@
  ;; If there is more than one, they won't work right.
  )
 
-(load-file (concat user-emacs-directory "settings.elc"))
+(load-file (concat user-emacs-directory "config.el"))

@@ -12,15 +12,22 @@ My personal init.el file, I'm still new at this
 Automatically tangle after every save
 
 #+BEGIN_SRC emacs-lisp
-(defun tangle-init()
-  "Tangle if the current file is init.org"
+(defun config/tangle-init()
+  "Tangle if the current file is config.org"
   (when (equal (buffer-file-name)
-               (expand-file-name (concat user-emacs-directory "settings.org")))
+               (expand-file-name (concat user-emacs-directory "config.org")))
     (let ((prog-mode-hook nil))
       (org-babel-tangle)
-      (byte-compile-file (concat user-emacs-directory "settings.el")))))
+      (byte-compile-file (concat user-emacs-directory "config.el")))))
 
-(add-hook 'after-save-hook 'tangle-init)
+(add-hook 'after-save-hook 'config/tangle-init)
+#+END_SRC
+
+Load files from /usr/share and any personal projects if they happen
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "/usr/share/emacs/site-lisp")
+(add-to-list 'load-path (concat user-emacs-directory "lisp"))
 #+END_SRC
 
 * Packages
@@ -59,6 +66,7 @@ Packages we want to have
   'company
   'evil
   'evil-escape
+  'evil-leader
   'evil-surround
   'idle-require
   'helm
@@ -76,7 +84,8 @@ Packages we want to have
   'powerline
   'projectile
   'spacemacs-theme
-  'slime)
+  'slime
+  'which-key)
 #+END_SRC
 
 * Style
@@ -117,27 +126,12 @@ Enable UTF8 by default
 
 Configuration for individual packages
 
-** Evil
-   
-Enable evil mode
+** General
+Disable automatic backup and autosave
 
 #+BEGIN_SRC emacs-lisp
-(require 'evil)
-(evil-mode 1)
-#+END_SRC
-
-*** Surround
-
-#+BEGIN_SRC emacs-lisp
-(global-evil-surround-mode)
-#+END_SRC
-
-*** Escape
-
-#+BEGIN_SRC emacs-lisp
-(evil-escape-mode)
-(setq-default evil-escape-key-sequence "fd")
-(setq-default evil-escape-delay 0.15)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
 #+END_SRC
 ** Linum
 
@@ -168,6 +162,13 @@ and files over 3MB large
 (require 'helm)
 (require 'helm-config)
 #+END_SRC
+** Projectile
+Set our search paths for projects
+
+#+BEGIN_SRC emacs-lisp
+(setq projectile-project-search-path '("~/Documents/Projects"))
+#+END_SRC
+
 ** Powerline
 
 #+BEGIN_SRC emacs-lisp
@@ -175,3 +176,97 @@ and files over 3MB large
 (powerline-default-theme)
 #+END_SRC
 
+** Which key
+
+Enable which key which shows the available key bindings similar to spacemacs
+
+#+BEGIN_SRC emacs-lisp
+(require 'which-key)
+(which-key-mode)
+(which-key-setup-side-window-bottom)
+#+END_SRC
+
+** Evil
+   Evil needs to come last to overlay most of the other mode keys
+*** Leader
+
+Set leader key to <SPC>
+
+#+BEGIN_SRC emacs-lisp
+(require 'evil-leader)
+(global-evil-leader-mode)
+(evil-leader/set-leader "<SPC>")
+#+END_SRC
+
+**** Basics
+
+use <SPC> <SPC> as an alternative to M-x
+
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "<SPC>" 'execute-extended-command)
+#+END_SRC
+
+**** Windows
+     
+All window commands are grouped with w
+#+BEGIN_SRC emacs-lisp
+
+#+END_SRC
+
+**** Files
+
+File navigation with evil
+
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "ff" 'find-file)
+#+END_SRC
+
+**** Config
+
+Reload the config as spacemacs with <SPC>feR
+
+#+BEGIN_SRC emacs-lisp
+(defun config/reload-config ()
+  (interactive)
+  (load-file (concat "~/.emacs.d/" "init.el")))
+  ; for some reason user-emacs-directory gets undefined
+  ;(load-file (concat (user-emacs-directory "init.el"))))
+(evil-leader/set-key "feR" 'config/reload-config)
+#+END_SRC
+
+Open the config.org file
+
+#+BEGIN_SRC emacs-lisp
+(defun config/open-config ()
+  (interactive)
+  (find-file (concat "~/.emacs.d/" "config.org")))  
+(evil-leader/set-key "fec" 'config/open-config)
+#+END_SRC
+
+*** Evil
+  
+Enable evil mode.
+This needs to be after enabling global-evil-leader-mode.
+
+#+BEGIN_SRC emacs-lisp
+(require 'evil)
+(evil-mode 1)
+#+END_SRC
+
+*** Surround
+    
+same as vim-surround in vim
+
+#+BEGIN_SRC emacs-lisp
+(global-evil-surround-mode)
+#+END_SRC
+
+*** Escape
+    
+I like using "fd" to escape insert mode
+
+#+BEGIN_SRC emacs-lisp
+(evil-escape-mode)
+(setq-default evil-escape-key-sequence "fd")
+(setq-default evil-escape-delay 0.15)
+#+END_SRC
