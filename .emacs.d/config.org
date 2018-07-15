@@ -133,9 +133,96 @@ Disable automatic backup and autosave
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 #+END_SRC
+** Evil leader
+
+Set leader key to <SPC>
+
+#+BEGIN_SRC emacs-lisp
+(require 'evil-leader)
+(global-evil-leader-mode)
+(evil-leader/set-leader "<SPC>")
+#+END_SRC
+
+**** Basics
+
+Use <SPC> <SPC> as an alternative to M-x.
+
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "<SPC>" 'execute-extended-command)
+#+END_SRC
+
+**** Files
+
+File navigation with evil
+
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "ff" 'find-file)
+(evil-leader/set-key "fr" 'rename-file)
+#+END_SRC
+
+**** Window
+     
+All actions related to handling windows.
+Settings for keybind "wa" at [[ace-window]]
+
+Window creation.
+
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "w/" 'split-window-horizontally)
+(evil-leader/set-key "w-" 'split-window-vertically)
+#+END_SRC
+
+Window movement
+
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "wl" 'windmove-right)
+(evil-leader/set-key "wh" 'windmove-left)
+(evil-leader/set-key "wj" 'windmove-down)
+(evil-leader/set-key "wk" 'windmove-up)
+#+END_SRC
+
+**** Config
+
+Reload the config as spacemacs with <SPC>feR
+
+#+BEGIN_SRC emacs-lisp
+(defun config/reload-config ()
+  (interactive)
+  (load-file (concat "~/.emacs.d/" "init.el")))
+  ; for some reason user-emacs-directory gets undefined
+  ;(load-file (concat (user-emacs-directory "init.el"))))
+(evil-leader/set-key "feR" 'config/reload-config)
+#+END_SRC
+
+Open the config.org file
+
+#+BEGIN_SRC emacs-lisp
+(defun config/open-config ()
+  (interactive)
+  (find-file (concat "~/.emacs.d/" "config.org")))  
+(evil-leader/set-key "fec" 'config/open-config)
+#+END_SRC
+
+** Ace Window
+
+<<ace-window>>
+Always dispatch to ace-window rather than using other-window for 2 windows
+
+#+BEGIN_SRC emacs-lisp
+(require 'ace-window)
+(setq aw-dispatch-always t)
+#+END_SRC
+
+*** Evil
+
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "wa" 'ace-window)
+#+END_SRC
+
 ** Linum
 
-Enable lines numbers in the gutter
+Enable lines numbers in the gutter.
+Absolute line for current line and relative around that.
 
 #+BEGIN_SRC emacs-lisp
 (linum-mode)
@@ -188,61 +275,6 @@ Enable which key which shows the available key bindings similar to spacemacs
 
 ** Evil
    Evil needs to come last to overlay most of the other mode keys
-*** Leader
-
-Set leader key to <SPC>
-
-#+BEGIN_SRC emacs-lisp
-(require 'evil-leader)
-(global-evil-leader-mode)
-(evil-leader/set-leader "<SPC>")
-#+END_SRC
-
-**** Basics
-
-use <SPC> <SPC> as an alternative to M-x
-
-#+BEGIN_SRC emacs-lisp
-(evil-leader/set-key "<SPC>" 'execute-extended-command)
-#+END_SRC
-
-**** Windows
-     
-All window commands are grouped with w
-#+BEGIN_SRC emacs-lisp
-
-#+END_SRC
-
-**** Files
-
-File navigation with evil
-
-#+BEGIN_SRC emacs-lisp
-(evil-leader/set-key "ff" 'find-file)
-#+END_SRC
-
-**** Config
-
-Reload the config as spacemacs with <SPC>feR
-
-#+BEGIN_SRC emacs-lisp
-(defun config/reload-config ()
-  (interactive)
-  (load-file (concat "~/.emacs.d/" "init.el")))
-  ; for some reason user-emacs-directory gets undefined
-  ;(load-file (concat (user-emacs-directory "init.el"))))
-(evil-leader/set-key "feR" 'config/reload-config)
-#+END_SRC
-
-Open the config.org file
-
-#+BEGIN_SRC emacs-lisp
-(defun config/open-config ()
-  (interactive)
-  (find-file (concat "~/.emacs.d/" "config.org")))  
-(evil-leader/set-key "fec" 'config/open-config)
-#+END_SRC
-
 *** Evil
   
 Enable evil mode.
