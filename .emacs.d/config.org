@@ -328,13 +328,16 @@ Enable which key which shows the available key bindings similar to spacemacs
   (evil-leader/set-key "wh" 'windmove-left)
   (evil-leader/set-key "wj" 'windmove-down)
   (evil-leader/set-key "wk" 'windmove-up)
-  (evil-leader/set-key "wd" 'delete-window))
+  (evil-leader/set-key "wd" 'delete-window)
+  (evil-leader/set-key "w/" 'split-window-horizontally)
+  (evil-leader/set-key "w-" 'split-window-vertically))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (defun config/evil-buffer-keybinds()
   (evil-leader/set-key "bh" 'previous-buffer)
-  (evil-leader/set-key "bl" 'next-buffer))
+  (evil-leader/set-key "bl" 'next-buffer)
+  (evil-leader/set-key "bd" 'kill-buffer))
 
 #+END_SRC
 
@@ -357,7 +360,7 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
 (use-package evil-leader
   :ensure t
   :after (evil)
-  :init (global-evil-leader-mode 1)
+  :init (evil-leader-mode)
   :config 
   (evil-leader/set-leader "<SPC>")
   (config/evil-window-keybinds)
