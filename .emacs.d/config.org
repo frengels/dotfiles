@@ -45,6 +45,24 @@ Use [[http://melpa.org/#/][melpa]] for packages
 (package-refresh-contents)
 #+END_SRC
 
+Bootstrap =use-package=
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+(add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/"))
+
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+#+END_SRC
+
 #+RESULTS:
 
 Function to check if packages are installed
@@ -63,34 +81,26 @@ Packages we want to have
 #+BEGIN_SRC emacs-lisp
 (ensure-package-installed 
   'auto-compile
-  'company
-  'evil
-  'evil-escape
-  'evil-leader
-  'evil-surround
   'idle-require
-  'helm
-  'helm-company
-  'helm-dash
-  'helm-projectile
+  'ivy
+  'counsel
+  'counsel-gtags
+  'counsel-projectile
+  'swiper
   'jedi
   'linum-relative
   'linum-off
   'magit
-  'markdown-mode
-  'material-theme
-  'org
   'org-ref
   'powerline
-  'projectile
   'spacemacs-theme
-  'slime
-  'which-key)
+  'slime)
 #+END_SRC
 
 * Style
 
-Disable the menu bar, scroll bar and tool bar
+Disable the menu bar, scroll bar and tool bar.
+We cannot establish dominance with any of these enabled.
 
 #+BEGIN_SRC emacs-lisp
 (menu-bar-mode -1)
@@ -105,9 +115,10 @@ I will replace this with Fira Code once emacs supports ligatures.
 (set-frame-font "Fira Mono 11")
 #+END_SRC
 
-Use the spacemacs theme because I like it
+Use the spacemacs theme because I like it and skip confirmation.
+
 #+BEGIN_SRC emacs-lisp
-(load-theme 'spacemacs-dark)
+(load-theme 'spacemacs-dark t)
 #+END_SRC
 
 Answer y or n rather than yes or no
@@ -122,6 +133,15 @@ Enable UTF8 by default
 (set-language-environment "UTF-8")
 #+END_SRC
 
+** C
+
+Indentation settings for c
+
+#+BEGIN_SRC emacs-lisp
+(setq c-default-style "linux"
+      c-basic-offset 4)
+#+END_SRC
+
 * Configuration
 
 Configuration for individual packages
@@ -133,133 +153,159 @@ Disable automatic backup and autosave
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 #+END_SRC
-** Evil leader
-
-Set leader key to <SPC>
-
-#+BEGIN_SRC emacs-lisp
-(require 'evil-leader)
-(global-evil-leader-mode)
-(evil-leader/set-leader "<SPC>")
-#+END_SRC
-
-**** Basics
-
-Use <SPC> <SPC> as an alternative to M-x.
-
-#+BEGIN_SRC emacs-lisp
-(evil-leader/set-key "<SPC>" 'execute-extended-command)
-#+END_SRC
-
-**** Files
-
-File navigation with evil
-
-#+BEGIN_SRC emacs-lisp
-(evil-leader/set-key "ff" 'find-file)
-(evil-leader/set-key "fr" 'rename-file)
-#+END_SRC
-
-**** Window
-     
-All actions related to handling windows.
-Settings for keybind "wa" at ace-window.
-
-Window creation.
-
-#+BEGIN_SRC emacs-lisp
-(evil-leader/set-key "w/" 'split-window-horizontally)
-(evil-leader/set-key "w-" 'split-window-vertically)
-#+END_SRC
-
-Window movement
-
-#+BEGIN_SRC emacs-lisp
-(evil-leader/set-key "wl" 'windmove-right)
-(evil-leader/set-key "wh" 'windmove-left)
-(evil-leader/set-key "wj" 'windmove-down)
-(evil-leader/set-key "wk" 'windmove-up)
-#+END_SRC
-
-**** Config
-
-Reload the config as spacemacs with <SPC>feR
-
-#+BEGIN_SRC emacs-lisp
-(defun config/reload-config ()
-  (interactive)
-  (load-file (concat "~/.emacs.d/" "init.el")))
-  ; for some reason user-emacs-directory gets undefined
-  ;(load-file (concat (user-emacs-directory "init.el"))))
-(evil-leader/set-key "feR" 'config/reload-config)
-#+END_SRC
-
-Open the config.org file
-
-#+BEGIN_SRC emacs-lisp
-(defun config/open-config ()
-  (interactive)
-  (find-file (concat "~/.emacs.d/" "config.org")))  
-(evil-leader/set-key "fec" 'config/open-config)
-#+END_SRC
-
 ** Ace Window
 
 Always dispatch to ace-window rather than using other-window for 2 windows
 
 #+BEGIN_SRC emacs-lisp
-(require 'ace-window)
-(setq aw-dispatch-always t)
+(defun config/ace-window-evil-keybinds ()
+  (evil-leader/set-key "wa" 'ace-window))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package ace-window
+  :ensure t
+  :init (setq aw-dispatch-always t)
+  :config
+  (config/ace-window-evil-keybinds))
 #+END_SRC
 
 *** Evil
-
-#+BEGIN_SRC emacs-lisp
-(evil-leader/set-key "wa" 'ace-window)
-#+END_SRC
-
 ** Linum
 
 Enable lines numbers in the gutter.
 Absolute line for current line and relative around that.
 
 #+BEGIN_SRC emacs-lisp
-(linum-mode)
-(linum-relative-mode)
-(setq linum-relative-current-symbol "")
+(use-package linum-relative
+  :ensure t
+  :hook
+  (prog-mode . linum-mode)
+  (prog-mode . linum-relative-mode)
+  :config
+  (setq linum-relative-current-symbol ""))
 #+END_SRC
 
-Enable linum everywhere and turn it off for certain modes
-and files over 3MB large
+** Clang Format
+   
+Format in C/C++ using clang-format
 
 #+BEGIN_SRC emacs-lisp
-(require 'linum-off)
+(use-package clang-format
+  :after (cc-mode)
+  :ensure t
+  :bind 
+    (:map c-mode-map ("<tab>" . clang-format-buffer)
+     :map c++-mode-map ("<tab>" . clang-format-buffer)))
+    
 #+END_SRC
 
 ** Company
+   
+Website for [[http://company-mode.github.io/][company-mode]].
+
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :defer 2
+  :diminish
+  :custom
+  (company-begin-commands '(self-insert-command))
+  (company-idle-delay .1)
+  (company-minimum-prefix-length 2)
+  (company-show-numbers t)
+  (company-tooltip-align-annotations t)
+  (global-company-mode t))
+#+END_SRC
+
+Get beautiful icons.
+I don't like this currently, will have to look into using fonts for icons.
+as described [[https://github.com/sebastiencs/company-box/wiki/icons][here]].
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(use-package company-box
+  :ensure t
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
+#+END_SRC
+
+** Flycheck
+   
+Enable flycheck for these modes
+  
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :hook ((c-mode . (lambda () (setq flycheck-clang-language-standard "c99")
+         (c++-mode . (lambda () (setq flycheck-clang-language-standard "c++17")))))))
+#+END_SRC
+
+** Ivy
+
+TODO: Replace helm with ivy
+Configuration for Ivy, Counsel and Swiper
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy
+  :ensure t
+  :init
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq enable-recursive-minibuffers t))
+#+END_SRC
+
+counsel setup 
 
 #+BEGIN_SRC emacs-lisp
 
 #+END_SRC
 
-** Helm
-
 #+BEGIN_SRC emacs-lisp
-(require 'helm)
-(require 'helm-config)
+(counsel-projectile-mode)
+(global-set-key (kbd "M-x") 'counsel-M-x)
+(evil-leader/set-key "<SPC>" 'counsel-M-x)
+(evil-leader/set-key "ff" 'find-file)
+
+(add-hook 'c-mode-hook 'counsel-gtags-mode)
+(add-hook 'c++-mode-hook 'counsel-gtags-mode)
 #+END_SRC
+
 ** Projectile
 Set our search paths for projects
 
 #+BEGIN_SRC emacs-lisp
-(setq projectile-project-search-path '("~/Documents/Projects"))
+
+(defun config/projectile-evil-keybinds()
+  (evil-leader/set-key "pp" 'counsel-projectile-switch-project))
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-mode t)
+  (setq projectile-enable-caching t)
+  (config/projectile-evil-keybinds))
 #+END_SRC
 
 ** Powerline
 
 #+BEGIN_SRC emacs-lisp
-(require 'powerline)
-(powerline-default-theme)
+(use-package powerline
+  :ensure t
+  :init (powerline-default-theme))
+#+END_SRC
+
+** Yasnippet
+
+Download and enable Yasnippet.
+
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :init
+  (yas-global-mode)
+  :config
+  (yas-reload-all))
 #+END_SRC
 
 ** Which key
@@ -267,37 +313,85 @@ Set our search paths for projects
 Enable which key which shows the available key bindings similar to spacemacs
 
 #+BEGIN_SRC emacs-lisp
-(require 'which-key)
-(which-key-mode)
-(which-key-setup-side-window-bottom)
+(use-package which-key
+  :ensure t
+  :init
+    (which-key-mode)
+    (which-key-setup-side-window-bottom))
 #+END_SRC
 
 ** Evil
-   Evil needs to come last to overlay most of the other mode keys
-*** Evil
+   
+#+BEGIN_SRC emacs-lisp
+(defun config/evil-window-keybinds()
+  (evil-leader/set-key "wl" 'windmove-right)
+  (evil-leader/set-key "wh" 'windmove-left)
+  (evil-leader/set-key "wj" 'windmove-down)
+  (evil-leader/set-key "wk" 'windmove-up)
+  (evil-leader/set-key "wd" 'delete-window))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(defun config/evil-buffer-keybinds()
+  (evil-leader/set-key "bh" 'previous-buffer)
+  (evil-leader/set-key "bl" 'next-buffer))
+
+#+END_SRC
+
+Evil needs to come last to overlay most of the other mode keys
   
 Enable evil mode.
 This needs to be after enabling global-evil-leader-mode.
 
+There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub]].
+
 #+BEGIN_SRC emacs-lisp
-(require 'evil)
-(evil-mode 1)
+(use-package evil
+  :ensure t
+  :config 
+    (evil-mode t)
+    (evil-escape-mode t)
+    (setq-default evil-escape-key-sequence "fd")
+    (setq-default evil-escape-delay 0.15))
+  
+(use-package evil-leader
+  :ensure t
+  :after (evil)
+  :init (global-evil-leader-mode 1)
+  :config 
+  (evil-leader/set-leader "<SPC>")
+  (config/evil-window-keybinds)
+  (config/evil-buffer-keybinds))
+  
+(use-package evil-magit
+  :ensure t
+  :after (evil)
+  :config
+    (evil-leader/set-key "gs" 'magit-status))
+    
+(use-package evil-org
+  :ensure t
+  :after (evil)
+  :hook (org-mode . evil-org-mode)
+  :config
+    (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading)))
+    
+(use-package evil-surround
+  :ensure t
+  :after (evil)
+  :config (global-evil-surround-mode 1))
 #+END_SRC
 
-*** Surround
-    
-same as vim-surround in vim
+Reloading and editing of the config file
 
 #+BEGIN_SRC emacs-lisp
-(global-evil-surround-mode)
-#+END_SRC
-
-*** Escape
-    
-I like using "fd" to escape insert mode
-
-#+BEGIN_SRC emacs-lisp
-(evil-escape-mode)
-(setq-default evil-escape-key-sequence "fd")
-(setq-default evil-escape-delay 0.15)
+(defun config/edit-config ()
+  (interactive)
+  (find-file (concat user-emacs-directory "config.org")))
+(defun config/load-config ()
+  (interactive)
+  (load-file (concat user-emacs-directory "init.el")))
+  
+(evil-leader/set-key "fec" 'config/edit-config)
+(evil-leader/set-key "feR" 'config/load-config)
 #+END_SRC
