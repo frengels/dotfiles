@@ -45,7 +45,8 @@ Use [[http://melpa.org/#/][melpa]] for packages
 (package-refresh-contents)
 #+END_SRC
 
-Bootstrap =use-package=
+Bootstrap =use-package=.
+Documentation for =use-package= can be found [[https://jwiegley.github.io/use-package/][here]].
 
 #+BEGIN_SRC emacs-lisp
 (require 'package)
@@ -82,18 +83,10 @@ Packages we want to have
 (ensure-package-installed 
   'auto-compile
   'idle-require
-  'ivy
-  'counsel
-  'counsel-gtags
-  'counsel-projectile
   'swiper
-  'jedi
-  'linum-relative
-  'linum-off
   'magit
   'org-ref
   'powerline
-  'spacemacs-theme
   'slime)
 #+END_SRC
 
@@ -118,7 +111,10 @@ I will replace this with Fira Code once emacs supports ligatures.
 Use the spacemacs theme because I like it and skip confirmation.
 
 #+BEGIN_SRC emacs-lisp
-(load-theme 'spacemacs-dark t)
+(use-package spacemacs-theme
+  :ensure t
+  :defer t
+  :init (load-theme 'spacemacs-dark t))
 #+END_SRC
 
 Answer y or n rather than yes or no
@@ -252,23 +248,38 @@ Configuration for Ivy, Counsel and Swiper
   :init
     (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
-    (setq enable-recursive-minibuffers t))
+    (setq enable-recursive-minibuffers t)
+    (setq ivy-display-style 'fancy))
 #+END_SRC
 
 counsel setup 
 
 #+BEGIN_SRC emacs-lisp
-
+(defun config/evil-counsel-keybinds()
+  (evil-leader/set-key "bb" 'counsel-ibuffer))
+  
+(use-package counsel
+  :ensure t
+  :after (ivy)
+  :config
+  (config/evil-counsel-keybinds))
+  
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(counsel-projectile-mode)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(evil-leader/set-key "<SPC>" 'counsel-M-x)
-(evil-leader/set-key "ff" 'find-file)
+(use-package counsel-projectile
+  :ensure t
+  :after (counsel)
+  :init (counsel-projectile-mode))
+#+END_SRC
 
-(add-hook 'c-mode-hook 'counsel-gtags-mode)
-(add-hook 'c++-mode-hook 'counsel-gtags-mode)
+#+BEGIN_SRC emacs-lisp
+(use-package counsel-gtags
+  :ensure t
+  :after (counsel)
+  :hook
+  (c-mode . counsel-gtags-mode)
+  (c++-mode . counsel-gtags-mode))
 #+END_SRC
 
 ** Projectile
@@ -276,7 +287,7 @@ Set our search paths for projects
 
 #+BEGIN_SRC emacs-lisp
 
-(defun config/projectile-evil-keybinds()
+(defun config/evil-projectile-keybinds()
   (evil-leader/set-key "pp" 'counsel-projectile-switch-project))
 
 (use-package projectile
@@ -284,7 +295,7 @@ Set our search paths for projects
   :config
   (projectile-mode t)
   (setq projectile-enable-caching t)
-  (config/projectile-evil-keybinds))
+  (config/evil-projectile-keybinds))
 #+END_SRC
 
 ** Powerline
@@ -315,12 +326,30 @@ Enable which key which shows the available key bindings similar to spacemacs
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
   :ensure t
+  :diminish (which-key-mode . " Ꙍ")
   :init
     (which-key-mode)
     (which-key-setup-side-window-bottom))
 #+END_SRC
 
 ** Evil
+   
+#+BEGIN_SRC emacs-lisp
+
+(defun config/edit-config ()
+  (interactive)
+  (find-file (concat user-emacs-directory "config.org")))
+(defun config/load-config ()
+  (interactive)
+  (load-file (concat user-emacs-directory "init.el")))
+  
+(defun config/evil-file-keybinds()
+  (evil-leader/set-key
+    "ff" 'find-file
+    "fR" 'rename-file
+    "fec" 'config/edit-config
+    "feR" 'config/load-config))
+#+END_SRC
    
 #+BEGIN_SRC emacs-lisp
 (defun config/evil-window-keybinds()
@@ -373,12 +402,14 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
 (use-package evil-leader
   :ensure t
   :after (evil)
-  :init (evil-leader-mode)
+  :init (global-evil-leader-mode t)
   :config 
   (evil-leader/set-leader "<SPC>")
+  (config/evil-file-keybinds)
   (config/evil-window-keybinds)
   (config/evil-buffer-keybinds)
-  (config/evil-help-keybinds))
+  (config/evil-help-keybinds)
+  (config/evil-file-keybinds))
   
 (use-package evil-magit
   :ensure t
@@ -397,18 +428,4 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
   :ensure t
   :after (evil)
   :config (global-evil-surround-mode 1))
-#+END_SRC
-
-Reloading and editing of the config file
-
-#+BEGIN_SRC emacs-lisp
-(defun config/edit-config ()
-  (interactive)
-  (find-file (concat user-emacs-directory "config.org")))
-(defun config/load-config ()
-  (interactive)
-  (load-file (concat user-emacs-directory "init.el")))
-  
-(evil-leader/set-key "fec" 'config/edit-config)
-(evil-leader/set-key "feR" 'config/load-config)
 #+END_SRC
