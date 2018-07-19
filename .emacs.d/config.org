@@ -30,6 +30,15 @@ Load files from /usr/share and any personal projects if they happen
 (add-to-list 'load-path (concat user-emacs-directory "lisp"))
 #+END_SRC
 
+#+BEGIN_SRC emacs-lisp
+(defun config/edit-config ()
+  (interactive)
+  (find-file (concat user-emacs-directory "config.org")))
+(defun config/load-config ()
+  (interactive)
+  (load-file (concat user-emacs-directory "init.el")))
+#+END_SRC
+
 * Packages
 
 Use =package= to simplify managing extensions
@@ -154,13 +163,9 @@ Disable automatic backup and autosave
 Always dispatch to ace-window rather than using other-window for 2 windows
 
 #+BEGIN_SRC emacs-lisp
-(defun config/ace-window-evil-keybinds ()
-  (evil-leader/set-key "wa" 'ace-window))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
 (use-package ace-window
   :ensure t
+  :commands (ace-window)
   :init (setq aw-dispatch-always t)
   :config
   (config/ace-window-evil-keybinds))
@@ -286,11 +291,8 @@ counsel setup
 Set our search paths for projects
 
 #+BEGIN_SRC emacs-lisp
-
-(defun config/evil-projectile-keybinds()
-  (evil-leader/set-key "pp" 'counsel-projectile-switch-project))
-
 (use-package projectile
+  :commands (counsel-projectile-switch-project)
   :ensure t
   :config
   (projectile-mode t)
@@ -332,48 +334,52 @@ Enable which key which shows the available key bindings similar to spacemacs
     (which-key-setup-side-window-bottom))
 #+END_SRC
 
-** Evil
-   
-#+BEGIN_SRC emacs-lisp
-
-(defun config/edit-config ()
-  (interactive)
-  (find-file (concat user-emacs-directory "config.org")))
-(defun config/load-config ()
-  (interactive)
-  (load-file (concat user-emacs-directory "init.el")))
+** TODO General
   
-(defun config/evil-file-keybinds()
-  (evil-leader/set-key
+I'll have to start migrating from evil-leader to general.
+Why? because evil-leader doesn't want to stay activate after reload and it pisses me off.
+
+
+
+#+BEGIN_SRC emacs-lisp
+(use-package general
+  :after (evil)
+  :ensure t
+  :config
+  (general-evil-setup t)
+  (general-create-definer my/space-definer
+    :prefix "SPC")
+  (general-mmap
+    ";" 'evil-ex
+    ":" 'evil-repeat-find-char)
+  (my/space-definer
+    :states 'motion
+    :keymaps 'override
+    "f" '(:ignore t :wk "file")
     "ff" 'find-file
     "fR" 'rename-file
-    "fec" 'config/edit-config
-    "feR" 'config/load-config))
-#+END_SRC
-   
-#+BEGIN_SRC emacs-lisp
-(defun config/evil-window-keybinds()
-  (evil-leader/set-key 
+    "fec" '(config/edit-config :wk "edit-config")
+    "feR" '(config/load-config :wk "load-config")
+    
+    "w" '(:ignore t :wk "window")
     "wl" 'windmove-right
     "wh" 'windmove-left
     "wj" 'windmove-down
     "wk" 'windmove-up
     "wd" 'delete-window
     "w/" 'split-window-horizontally
-    "w-" 'split-window-vertically))
-#+END_SRC
+    "w-" 'split-window-vertically
+    "wa" 'ace-window
 
-#+BEGIN_SRC emacs-lisp
-(defun config/evil-buffer-keybinds()
-  (evil-leader/set-key 
+    "b" '(:ignore t :wk "buffer")
     "bh" 'previous-buffer
     "bl" 'next-buffer
-    "bd" 'kill-buffer))
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(defun config/evil-help-keybinds()
-  (evil-leader/set-key 
+    "bd" 'kill-buffer
+    
+    "p" '(:ignore t :wk "project")
+    "pp" 'counsel-projectile-switch-project
+    
+    "h" '(:ignore t :wk "help")
     "hc" 'describe-char 
     "hf" 'describe-function
     "hk" 'describe-key
@@ -382,6 +388,8 @@ Enable which key which shows the available key bindings similar to spacemacs
     "ht" 'describe-theme
     "hv" 'describe-variable))
 #+END_SRC
+
+** Evil
 
 Evil needs to come last to overlay most of the other mode keys
   
@@ -398,19 +406,7 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
     (evil-escape-mode t)
     (setq-default evil-escape-key-sequence "fd")
     (setq-default evil-escape-delay 0.15))
-  
-(use-package evil-leader
-  :ensure t
-  :after (evil)
-  :init (global-evil-leader-mode t)
-  :config 
-  (evil-leader/set-leader "<SPC>")
-  (config/evil-file-keybinds)
-  (config/evil-window-keybinds)
-  (config/evil-buffer-keybinds)
-  (config/evil-help-keybinds)
-  (config/evil-file-keybinds))
-  
+ 
 (use-package evil-magit
   :ensure t
   :after (evil)
