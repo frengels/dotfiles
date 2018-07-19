@@ -188,11 +188,22 @@ Absolute line for current line and relative around that.
 
 ** Clang Format
    
-Format in C/C++ using clang-format
+Format in C/C++ using clang-format.
+I should look into these custom format options.
 
 #+BEGIN_SRC emacs-lisp
+(defun config/clang-format-region-mozilla (s e)
+  (interactive
+    (if (use-region-p)
+      (list (region-beginning) (region-end))
+      (list (point) (point))))
+  (clang-format-region s e "Mozilla"))
+  
+(defun config/clang-format-buffer-mozilla ()
+  (interactive)
+  (clang-format-buffer "Mozilla"))
+
 (use-package clang-format
-  :after (cc-mode)
   :ensure t
   :bind 
     (:map c-mode-map ("<tab>" . clang-format-buffer)
