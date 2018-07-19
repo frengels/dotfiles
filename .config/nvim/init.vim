@@ -40,6 +40,13 @@ colorscheme spacemacs-theme
 
 let g:airline_powerline_fonts = 1
 
+" change ; to : and vice versa
+
+nnoremap ; :
+nnoremap : ;
+vnoremap ; :
+vnoremap : ;
+
 " escape insert mode by quickly typing fd
 imap fd <Esc>
 autocmd InsertEnter * set timeoutlen=200
