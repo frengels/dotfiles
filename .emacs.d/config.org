@@ -158,6 +158,16 @@ Disable automatic backup and autosave
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 #+END_SRC
+** Editorconfig
+
+#+BEGIN_SRC emacs-lisp
+(use-package editorconfig
+  :ensure t
+  :delight (editorconfig-mode)
+  :config
+  (editorconfig-mode 1))
+#+END_SRC
+
 ** Ace Window
 
 Always dispatch to ace-window rather than using other-window for 2 windows
@@ -180,6 +190,8 @@ Absolute line for current line and relative around that.
   :hook
   (prog-mode . linum-mode)
   (prog-mode . linum-relative-mode)
+  (text-mode . linum-mode)
+  (text-mode . linum-relative-mode)
   :init
   (setq linum-relative-current-symbol ""))
 #+END_SRC
@@ -261,6 +273,16 @@ as described [[https://github.com/sebastiencs/company-box/wiki/icons][here]].
   (irony-mode . (lambda () (add-to-list 'company-backends 'company-irony))))
 #+END_SRC
 
+**** headers
+     
+#+BEGIN_SRC emacs-lisp
+(use-package company-irony-c-headers
+  :ensure t
+  :after (company)
+  :config
+  (add-to-list 'company-backends 'company-irony-c-headers))
+#+END_SRC
+
 ** Flycheck
    
 Enable flycheck for these modes
@@ -282,10 +304,19 @@ Enable flycheck for these modes
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck-irony
   :ensure t
-  :commands flycheck-irony-setup
+  :after (flycheck)
   :hook 
   (c-mode . flycheck-irony-setup)
   (c++-mode . flycheck-irony-setup))
+#+END_SRC
+
+*** clang-analyzer
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-clang-analyzer
+  :ensure t
+  :config
+  (flycheck-clang-analyzer-setup))
 #+END_SRC
 
 *** Pos tip
@@ -388,7 +419,14 @@ Enable which key which shows the available key bindings similar to spacemacs
   (which-key-setup-side-window-bottom))
 #+END_SRC
 
-** TODO General
+** Buf Move
+
+#+BEGIN_SRC emacs-lisp
+(use-package buffer-move
+  :ensure t
+  :commands (buf-move-left buf-move-right buf-move-up buf-move-down))
+#+END_SRC
+** General
   
 I'll have to start migrating from evil-leader to general.
 Why? because evil-leader doesn't want to stay activate after reload and it pisses me off.
@@ -405,7 +443,11 @@ Why? because evil-leader doesn't want to stay activate after reload and it pisse
     :prefix "SPC")
   (general-mmap
     ";" 'evil-ex
-    ":" 'evil-repeat-find-char)
+    ":" 'evil-repeat-find-char
+    "=" 'enlarge-window
+    "-" 'shrink-window
+    "C-=" 'enlarge-window-horizontally
+    "C--" 'shrink-window-horizontally)
   (my/space-definer
     :states 'motion
     :keymaps 'override
@@ -413,6 +455,7 @@ Why? because evil-leader doesn't want to stay activate after reload and it pisse
     "f" '(:ignore t :wk "file")
     "ff" 'find-file
     "fR" 'rename-file
+    "fe" '(:ignore t :wk "emacs")
     "fec" '(config/edit-config :wk "edit-config")
     "feR" '(config/load-config :wk "load-config")
     
@@ -431,6 +474,10 @@ Why? because evil-leader doesn't want to stay activate after reload and it pisse
     "bh" 'previous-buffer
     "bl" 'next-buffer
     "bd" 'kill-buffer
+    "bL" 'buf-move-right
+    "bH" 'buf-move-left
+    "bJ" 'buf-move-down
+    "bK" 'buf-move-up
     
     "p" '(:ignore t :wk "project")
     "pp" 'counsel-projectile-switch-project
@@ -488,6 +535,27 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
   :config (global-evil-surround-mode 1))
 #+END_SRC
 
+
+* Rust
+  
+Basic rust setup. I'm interested in giving this language a serious go with all the hype around it.
+
+#+BEGIN_SRC emacs-lisp
+(use-package rust-mode
+  :ensure t
+  :mode "\\.rs\\'")
+#+END_SRC
+
+** Racer
+
+#+BEGIN_SRC emacs-lisp
+(use-package racer
+  :ensure t
+  :hook
+  (rust-mode . racer-mode)
+  (rust-mode . eldoc-mode))
+#+END_SRC
+
 * Games
   
 ** Typing
@@ -497,3 +565,4 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
   :ensure t
   :commands (typit-test typit-basic-test typit-advanced-test))
 #+END_SRC
+
