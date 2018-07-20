@@ -166,9 +166,7 @@ Always dispatch to ace-window rather than using other-window for 2 windows
 (use-package ace-window
   :ensure t
   :commands (ace-window)
-  :init (setq aw-dispatch-always t)
-  :config
-  (config/ace-window-evil-keybinds))
+  :init (setq aw-dispatch-always t))
 #+END_SRC
 
 ** Linum
@@ -182,7 +180,7 @@ Absolute line for current line and relative around that.
   :hook
   (prog-mode . linum-mode)
   (prog-mode . linum-relative-mode)
-  :config
+  :init
   (setq linum-relative-current-symbol ""))
 #+END_SRC
 
@@ -207,8 +205,8 @@ I should look into these custom format options.
   :ensure t
   :bind 
     (:map c-mode-map ("<tab>" . clang-format-buffer)
-     :map c++-mode-map ("<tab>" . clang-format-buffer)))
-    
+     :map c++-mode-map ("<tab>" . clang-format-buffer)
+     :map objc-mode-map ("<tab>" . clang-format-buffer)))
 #+END_SRC
 
 ** Company
@@ -319,9 +317,7 @@ counsel setup
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
-  :after (ivy)
-  :config
-  (config/evil-counsel-keybinds))
+  :after (ivy))
   
 #+END_SRC
 
@@ -352,8 +348,7 @@ Set our search paths for projects
   :ensure t
   :config
   (projectile-mode t)
-  (setq projectile-enable-caching t)
-  (config/evil-projectile-keybinds))
+  (setq projectile-enable-caching t))
 #+END_SRC
 
 ** Powerline
@@ -364,7 +359,7 @@ Set our search paths for projects
   :init (powerline-default-theme))
 #+END_SRC
 
-** Yasnippet
+** TODO Yasnippet
 
 Download and enable Yasnippet.
 
@@ -389,8 +384,8 @@ Enable which key which shows the available key bindings similar to spacemacs
   :ensure t
   :delight (which-key-mode)
   :init
-    (which-key-mode)
-    (which-key-setup-side-window-bottom))
+  (which-key-mode)
+  (which-key-setup-side-window-bottom))
 #+END_SRC
 
 ** TODO General
@@ -440,6 +435,9 @@ Why? because evil-leader doesn't want to stay activate after reload and it pisse
     "p" '(:ignore t :wk "project")
     "pp" 'counsel-projectile-switch-project
     
+    "g" '(:ignore t :wk "git")
+    "gs" 'magit-status
+    
     "h" '(:ignore t :wk "help")
     "hc" 'describe-char 
     "hf" 'describe-function
@@ -474,9 +472,7 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
  
 (use-package evil-magit
   :ensure t
-  :after (evil)
-  :config
-    (evil-leader/set-key "gs" 'magit-status))
+  :after (evil))
     
 (use-package evil-org
   :ensure t
@@ -490,4 +486,14 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
   :ensure t
   :after (evil)
   :config (global-evil-surround-mode 1))
+#+END_SRC
+
+* Games
+  
+** Typing
+   
+#+BEGIN_SRC emacs-lisp
+(use-package typit
+  :ensure t
+  :commands (typit-test typit-basic-test typit-advanced-test))
 #+END_SRC
