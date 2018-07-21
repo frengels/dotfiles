@@ -168,6 +168,17 @@ Disable automatic backup and autosave
   (editorconfig-mode 1))
 #+END_SRC
 
+** Parentheses
+
+I want parentheses highlighted, otherwise life can get confusing.
+
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-parentheses
+  :ensure t
+  :config
+  (global-highlight-parentheses-mode t))
+#+END_SRC
+
 ** Ace Window
 
 Always dispatch to ace-window rather than using other-window for 2 windows
@@ -215,6 +226,7 @@ I should look into these custom format options.
 
 (use-package clang-format
   :ensure t
+  :defer t
   :bind 
     (:map c-mode-map ("<tab>" . clang-format-buffer)
      :map c++-mode-map ("<tab>" . clang-format-buffer)
@@ -489,6 +501,7 @@ Assistance function
     "bh" 'previous-buffer
     "bl" 'next-buffer
     "bd" 'kill-buffer
+    "bD" 'kill-current-buffer
     "bL" 'buf-move-right
     "bH" 'buf-move-left
     "bJ" 'buf-move-down
@@ -561,6 +574,16 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
   :mode "\\.rs\\'")
 #+END_SRC
 
+** Cargo
+
+#+BEGIN_SRC emacs-lisp
+(use-package cargo
+  :ensure t
+  :hook
+  (rust-mode . cargo-minor-mode))
+#+END_SRC
+  
+
 ** Racer
 
 #+BEGIN_SRC emacs-lisp
@@ -571,6 +594,14 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
   (rust-mode . eldoc-mode))
 #+END_SRC
 
+** Flycheck
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck-rust
+  :ensure t
+  :after (rust-mode)
+  :hook (flycheck-mode . flycheck-rust-setup))
+#+END_SRC
 * Games
   
 ** Typing
