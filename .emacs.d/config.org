@@ -431,7 +431,21 @@ Enable which key which shows the available key bindings similar to spacemacs
 I'll have to start migrating from evil-leader to general.
 Why? because evil-leader doesn't want to stay activate after reload and it pisses me off.
 
+Assistance function
 
+#+BEGIN_SRC emacs-lisp
+(defun my/delete-file-and-buffer ()
+  "Kill the current buffer and delete the visiting file"
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if filename
+      (if (yes-or-no-p (concat "Delete file '" filename "' ?"))
+        (progn
+          (delete-file filename)
+          (message "Deleted file '%s'." filename)
+          (kill-buffer)))
+      (message "Not a file visiting buffer!"))))
+#+END_SRC
 
 #+BEGIN_SRC emacs-lisp
 (use-package general
@@ -455,6 +469,7 @@ Why? because evil-leader doesn't want to stay activate after reload and it pisse
     "f" '(:ignore t :wk "file")
     "ff" 'find-file
     "fR" 'rename-file
+    "fD" '(my/delete-file-and-buffer :wk "delete-file")
     "fe" '(:ignore t :wk "emacs")
     "fec" '(config/edit-config :wk "edit-config")
     "feR" '(config/load-config :wk "load-config")
