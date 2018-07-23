@@ -465,6 +465,8 @@ Assistance function
   :ensure t
   :config
   (general-evil-setup t)
+  (general-define-key
+    "M-x" 'counsel-M-x)
   (general-create-definer my/space-definer
     :prefix "SPC")
   (general-mmap
@@ -521,6 +523,8 @@ Assistance function
     "hp" 'describe-package
     "ht" 'describe-theme
     "hv" 'describe-variable))
+    
+
 #+END_SRC
 
 ** Evil
@@ -580,7 +584,24 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
 (use-package cargo
   :ensure t
   :hook
-  (rust-mode . cargo-minor-mode))
+  (rust-mode . cargo-minor-mode)
+  :config
+  (my/space-definer
+    :states 'motion
+    :keymaps 'rust-mode-map
+    "m" '(:ignore t :wk "rust-mode")
+    "mc" '(:ignore t :wk "cargo")
+    "mcb" '(cargo-process-build :wk "cargo-build")
+    "mce" '(cargo-process-bench :wk "cargo-bench")
+    "mcl" '(cargo-process-clean :wk "cargo-clean")
+    "mck" '(cargo-process-check :wk "cargo-check")
+    "mct" '(cargo-process-test :wk "cargo-test")
+    "mco" '(cargo-process-current-file-tests :wk "cargo-current-file-tests")
+    "mcf" '(cargo-process-current-test :wk "cargo-current-tests")
+    "mcd" '(cargo-process-doc :wk "cargo-doc")
+    "mcv" '(cargo-process-doc-open :wk "cargo-doc-open")
+    "mcu" '(cargo-process-update :wk "cargo-update")
+    "mcs" '(cargo-process-search :wk "cargo-search")))
 #+END_SRC
   
 
@@ -591,7 +612,11 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
   :ensure t
   :hook
   (rust-mode . racer-mode)
-  (rust-mode . eldoc-mode))
+  (rust-mode . eldoc-mode)
+  :config
+  (setq-default racer-rust-src-path 
+    "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
+  (setq-default racer-cmd "~/.cargo/bin/racer"))
 #+END_SRC
 
 ** Flycheck
@@ -600,7 +625,9 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
 (use-package flycheck-rust
   :ensure t
   :after (rust-mode)
-  :hook (flycheck-mode . flycheck-rust-setup))
+  :hook 
+  (rust-mode . flycheck-mode)
+  (flycheck-mode . flycheck-rust-setup))
 #+END_SRC
 * Games
   
