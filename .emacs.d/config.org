@@ -98,7 +98,7 @@ Function to check if packages are installed
 Packages we want to have
 
 #+BEGIN_SRC emacs-lisp
-(ensure-package-installed 
+(ensure-package-installed
   'auto-compile
   'idle-require
   'swiper
@@ -186,7 +186,7 @@ Disable automatic backup and autosave
 #+END_SRC
 
 ** TODO Smart parentheses
-   
+
 [[https://github.com/Fuco1/smartparens][github]] and evil-parens
 
 ** Parentheses
@@ -219,7 +219,7 @@ Absolute line for current line and relative around that.
 #+BEGIN_SRC emacs-lisp
 (use-package linum-relative
   :ensure t
-  :delight 
+  :delight
   (linum-mode)
   (linum-relative-mode)
   :hook
@@ -232,33 +232,33 @@ Absolute line for current line and relative around that.
 #+END_SRC
 
 ** Clang Format
-   
+
 Format in C/C++ using clang-format.
 I should look into these custom format options.
 
 #+BEGIN_SRC emacs-lisp
-(defun config/clang-format-region-mozilla (s e)
-  (interactive
-    (if (use-region-p)
-      (list (region-beginning) (region-end))
-      (list (point) (point))))
-  (clang-format-region s e "Mozilla"))
-  
-(defun config/clang-format-buffer-mozilla ()
-  (interactive)
-  (clang-format-buffer "Mozilla"))
+;(defun config/clang-format-region-mozilla (s e)
+  ;(interactive
+    ;(if (use-region-p)
+      ;(list (region-beginning) (region-end))
+      ;(list (point) (point))))
+  ;(clang-format-region s e "Mozilla"))
+
+;(defun config/clang-format-buffer-mozilla ()
+  ;(interactive)
+  ;(clang-format-buffer "Mozilla"))
 
 (use-package clang-format
   :ensure t
   :defer t
-  :bind 
+  :bind
     (:map c-mode-map ("<tab>" . clang-format-buffer)
      :map c++-mode-map ("<tab>" . clang-format-buffer)
      :map objc-mode-map ("<tab>" . clang-format-buffer)))
 #+END_SRC
 
 ** Company
-   
+
 Website for [[http://company-mode.github.io/][company-mode]].
 
 #+BEGIN_SRC emacs-lisp
@@ -310,7 +310,7 @@ as described [[https://github.com/sebastiencs/company-box/wiki/icons][here]].
 #+END_SRC
 
 **** headers
-     
+
 #+BEGIN_SRC emacs-lisp
 (use-package company-irony-c-headers
   :ensure t
@@ -320,15 +320,15 @@ as described [[https://github.com/sebastiencs/company-box/wiki/icons][here]].
 #+END_SRC
 
 ** Flycheck
-   
+
 Enable flycheck for these modes
-  
+
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :ensure t
   :defer t
   :delight
-  :hook 
+  :hook
   (c-mode . (lambda () (setq flycheck-clang-language-standard "c99")))
   (c++-mode . (lambda () (setq flycheck-clang-language-standard "c++17")))
   (c-mode . flycheck-mode)
@@ -341,7 +341,7 @@ Enable flycheck for these modes
 (use-package flycheck-irony
   :ensure t
   :after (flycheck)
-  :hook 
+  :hook
   (c-mode . flycheck-irony-setup)
   (c++-mode . flycheck-irony-setup))
 #+END_SRC
@@ -381,13 +381,13 @@ Configuration for Ivy, Counsel and Swiper
   (setq projectile-completion-system 'ivy))
 #+END_SRC
 
-counsel setup 
+counsel setup
 
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
   :after (ivy))
-  
+
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -435,7 +435,7 @@ Download and enable Yasnippet.
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
   :ensure t
-  :delight 
+  :delight
   (yas-global-mode)
   (yas-minor-mode)
   :init
@@ -481,7 +481,7 @@ Enable which key which shows the available key bindings similar to spacemacs
   :commands (buf-move-left buf-move-right buf-move-up buf-move-down))
 #+END_SRC
 ** General
-  
+
 I'll have to start migrating from evil-leader to general.
 Why? because evil-leader doesn't want to stay activate after reload and it pisses me off.
 
@@ -523,7 +523,7 @@ Assistance function
     :keymaps 'override
     "SPC" '(counsel-M-x :wk "M-x")
     "s" 'swiper
-    
+
     "f" '(:ignore t :wk "file")
     "ff" 'find-file
     "fR" 'rename-file
@@ -531,7 +531,7 @@ Assistance function
     "fe" '(:ignore t :wk "emacs")
     "fec" '(config/edit-config :wk "edit-config")
     "feR" '(config/load-config :wk "load-config")
-    
+
     "w" '(:ignore t :wk "window")
     "wl" 'windmove-right
     "wh" 'windmove-left
@@ -554,7 +554,7 @@ Assistance function
     "bJ" 'buf-move-down
     "bK" 'buf-move-up
     "bp" 'counsel-projectile-switch-to-buffer
-    
+
     "p" '(:ignore t :wk "project")
     "pp" 'counsel-projectile-switch-project
     "pf" 'counsel-projectile-find-file
@@ -564,26 +564,26 @@ Assistance function
     "ps" '(:ignore t :wk "search")
     "psr" 'counsel-projectile-rg
     "psg" 'counsel-projectile-grep
-    
+
     "g" '(:ignore t :wk "git")
     "gs" 'magit-status
-    
+
     "h" '(:ignore t :wk "help")
-    "hc" 'describe-char 
+    "hc" 'describe-char
     "hf" 'describe-function
     "hk" 'describe-key
     "hm" 'describe-mode
     "hp" 'describe-package
     "ht" 'describe-theme
     "hv" 'describe-variable))
-    
+
 
 #+END_SRC
 
 ** Evil
 
 Evil needs to come last to overlay most of the other mode keys
-  
+
 Enable evil mode.
 This needs to be after enabling global-evil-leader-mode.
 
@@ -592,20 +592,20 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :ensure t
-  :delight 
+  :delight
   (evil-escape-mode)
   (undo-tree-mode)
   (global-undo-tree-mode)
-  :config 
+  :config
     (evil-mode t)
     (evil-escape-mode t)
     (setq-default evil-escape-key-sequence "fd")
     (setq-default evil-escape-delay 0.15))
- 
+
 (use-package evil-magit
   :ensure t
   :after (evil))
-    
+
 (use-package evil-org
   :ensure t
   :delight (evil-org-mode)
@@ -613,7 +613,7 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
   :hook (org-mode . evil-org-mode)
   :config
     (evil-org-set-key-theme '(textobjects insert navigation additional shift todo heading)))
-    
+
 (use-package evil-surround
   :ensure t
   :after (evil)
@@ -622,8 +622,8 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
 
 
 * C
-  
-  
+
+
 #+BEGIN_SRC emacs-lisp
 (my/space-definer
   :states 'motion
@@ -634,10 +634,13 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
 
 
 * Rust
-  
+
 Basic rust setup. I'm interested in giving this language a serious go with all the hype around it.
 
 #+BEGIN_SRC emacs-lisp
+; set environment variable to our local rust
+(setenv "PATH" "$HOME/.cargo/bin:$PATH")
+
 (use-package rust-mode
   :ensure t
   :mode "\\.rs\\'")
@@ -670,7 +673,7 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
     "mcu" '(cargo-process-update :wk "cargo-update")
     "mcs" '(cargo-process-search :wk "cargo-search")))
 #+END_SRC
-  
+
 
 ** Racer
 
@@ -680,10 +683,14 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
   :hook
   (rust-mode . racer-mode)
   (rust-mode . eldoc-mode)
+  (racer-mode . company-mode)
   :config
-  (setq-default racer-rust-src-path 
+  (setq-default racer-rust-src-path
     "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
-  (setq-default racer-cmd "~/.cargo/bin/racer"))
+  (setq-default racer-cmd "~/.cargo/bin/racer")
+  :bind
+    (:map rust-mode-map ("<tab>" . company-indent-or-complete-common)
+     :map rust-mode-map ("C-c <tab>" . rust-format-buffer)))
 #+END_SRC
 
 ** Flycheck
@@ -691,11 +698,10 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck-rust
   :ensure t
-  :after (rust-mode)
-  :hook 
+  :hook
   (rust-mode . flycheck-mode)
   (flycheck-mode . flycheck-rust-setup))
 #+END_SRC
 * Games
-  
+
 No games here yet. Maybe I'll find something worthwhile eventually.
