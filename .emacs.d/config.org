@@ -39,6 +39,15 @@ Load files from /usr/share and any personal projects if they happen
   (load-file (concat user-emacs-directory "init.el")))
 #+END_SRC
 
+setup the languages to load for org-babel, only =emacs-lisp= currently.
+
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages
+  'org-babel-load-languages
+  '(
+    (emacs-lisp . t)))
+#+END_SRC
+
 * Packages
 
 Use =package= to simplify managing extensions
@@ -151,6 +160,14 @@ Indentation settings for c
 
 Configuration for individual packages
 
+** Trailing whitespace
+
+I don't want trailing whitespace so let's eliminate it every time we save.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
 ** General
 Disable automatic backup and autosave
 
@@ -167,6 +184,10 @@ Disable automatic backup and autosave
   :config
   (editorconfig-mode 1))
 #+END_SRC
+
+** TODO Smart parentheses
+   
+[[https://github.com/Fuco1/smartparens][github]] and evil-parens
 
 ** Parentheses
 
@@ -198,6 +219,9 @@ Absolute line for current line and relative around that.
 #+BEGIN_SRC emacs-lisp
 (use-package linum-relative
   :ensure t
+  :delight 
+  (linum-mode)
+  (linum-relative-mode)
   :hook
   (prog-mode . linum-mode)
   (prog-mode . linum-relative-mode)
@@ -349,10 +373,12 @@ Configuration for Ivy, Counsel and Swiper
   :ensure t
   :delight (ivy-mode)
   :init
-    (ivy-mode 1)
     (setq ivy-use-virtual-buffers t)
     (setq enable-recursive-minibuffers t)
-    (setq ivy-display-style 'fancy))
+    (setq ivy-display-style 'fancy)
+  :config
+  (ivy-mode 1)
+  (setq projectile-completion-system 'ivy))
 #+END_SRC
 
 counsel setup 
@@ -369,7 +395,7 @@ counsel setup
   :ensure t
   :delight (counsel-projectile-mode)
   :after (counsel)
-  :init (counsel-projectile-mode))
+  :config (counsel-projectile-mode))
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
@@ -415,7 +441,23 @@ Download and enable Yasnippet.
   :init
   (yas-global-mode)
   :config
-  (yas-reload-all))
+  (yas-reload-all)
+  (add-to-list 'company-backends 'company-yasnippet))
+#+END_SRC
+
+Preview snippets with Ivy.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy-yasnippet
+  :ensure t
+  :commands (ivy-yasnippet))
+#+END_SRC
+
+Common snippets
+
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet-snippets
+  :ensure t)
 #+END_SRC
 
 ** Which key
@@ -480,6 +522,8 @@ Assistance function
     :states 'motion
     :keymaps 'override
     "SPC" '(counsel-M-x :wk "M-x")
+    "s" 'swiper
+    
     "f" '(:ignore t :wk "file")
     "ff" 'find-file
     "fR" 'rename-file
@@ -494,6 +538,7 @@ Assistance function
     "wj" 'windmove-down
     "wk" 'windmove-up
     "wd" 'delete-window
+    "wD" 'kill-buffer-and-window
     "w/" 'split-window-horizontally
     "w-" 'split-window-vertically
     "wa" 'ace-window
@@ -508,9 +553,17 @@ Assistance function
     "bH" 'buf-move-left
     "bJ" 'buf-move-down
     "bK" 'buf-move-up
+    "bp" 'counsel-projectile-switch-to-buffer
     
     "p" '(:ignore t :wk "project")
     "pp" 'counsel-projectile-switch-project
+    "pf" 'counsel-projectile-find-file
+    "pd" 'counsel-projectile-find-dir
+    "pb" 'counsel-projectile-switch-to-buffer
+    "po" 'counsel-projectile-org-capture
+    "ps" '(:ignore t :wk "search")
+    "psr" 'counsel-projectile-rg
+    "psg" 'counsel-projectile-grep
     
     "g" '(:ignore t :wk "git")
     "gs" 'magit-status
@@ -568,6 +621,18 @@ There's a good guide for Evil on [[https://github.com/noctuid/evil-guide][GitHub
 #+END_SRC
 
 
+* C
+  
+  
+#+BEGIN_SRC emacs-lisp
+(my/space-definer
+  :states 'motion
+  :keymaps 'c-mode-map
+  "m" '(ignore t :wk "c-mode")
+  "ma" '(projectile-find-other-file))
+#+END_SRC
+
+
 * Rust
   
 Basic rust setup. I'm interested in giving this language a serious go with all the hype around it.
@@ -591,10 +656,12 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
     :keymaps 'rust-mode-map
     "m" '(:ignore t :wk "rust-mode")
     "mc" '(:ignore t :wk "cargo")
+    "mcr" '(cargo-process-run :wk "cargo-run")
     "mcb" '(cargo-process-build :wk "cargo-build")
     "mce" '(cargo-process-bench :wk "cargo-bench")
     "mcl" '(cargo-process-clean :wk "cargo-clean")
     "mck" '(cargo-process-check :wk "cargo-check")
+    "mcK" '(cargo-process-clippy :wk "cargo-clippy")
     "mct" '(cargo-process-test :wk "cargo-test")
     "mco" '(cargo-process-current-file-tests :wk "cargo-current-file-tests")
     "mcf" '(cargo-process-current-test :wk "cargo-current-tests")
@@ -631,11 +698,4 @@ Basic rust setup. I'm interested in giving this language a serious go with all t
 #+END_SRC
 * Games
   
-** Typing
-   
-#+BEGIN_SRC emacs-lisp
-(use-package typit
-  :ensure t
-  :commands (typit-test typit-basic-test typit-advanced-test))
-#+END_SRC
-
+No games here yet. Maybe I'll find something worthwhile eventually.
