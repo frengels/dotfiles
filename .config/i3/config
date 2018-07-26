@@ -29,7 +29,7 @@ font pango:Fira Mono 11
 # autostarts
 exec --no-startup-id compton --config ~/.config/compton/compton.conf -b -c -f
 exec --no-startup-id redshift
-exec --no-startup-id polybar bar
+exec --no-startup-id polybar example
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id nm-applet
 
@@ -40,6 +40,9 @@ floating_modifier $mod
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 5
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 5
 
 # start a terminal
 bindsym $mod+Return exec kitty
