@@ -55,8 +55,9 @@
 ;; use fira mono 11 as our default font
 ;; change to fira code when emacs supports ligatures
 
-(set-frame-font "Fira Mono 11")
-
+(condition-case nil
+    (set-frame-font "Fira Mono 11")
+  (error nil))
 ;; use the spacemacs theme because it's pretty
 
 (use-package spacemacs-theme
