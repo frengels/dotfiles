@@ -7,7 +7,7 @@ stowables=(
 
 for stowable in ${stowables[@]}
 do
-	stowoutput=$(stow $stowable)
+	stow $stowable
 	stowres=$?
 	echo -n "stowing \"$stowable\""
 	if [ $stowres -eq 0 ]
