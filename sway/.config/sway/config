@@ -75,6 +75,10 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     # start a terminal
     bindsym $mod+Return exec $term
 
+    # my own applications etc
+    bindsym XF86MonBrightnessUp exec light -A 10
+    bindsym XF86MonBrightnessDown exec light -U 10
+
     # kill focused window
     bindsym $mod+Shift+q kill
 
