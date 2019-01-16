@@ -4,6 +4,7 @@ stowables=(
   git
   sway
   alacritty
+  guile
 )
 
 for stowable in ${stowables[@]}
