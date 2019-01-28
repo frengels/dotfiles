@@ -5,6 +5,7 @@ stowables=(
   sway
   alacritty
   guile
+  htop
 )
 
 for stowable in ${stowables[@]}
