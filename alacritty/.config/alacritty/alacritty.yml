@@ -103,7 +103,7 @@ font:
     style: Bold
 
   # Point size
-  size: 7.5
+  size: 11.0 # should be 11.0 but dpr is 1.75 for some reason and I'm too lazy
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
