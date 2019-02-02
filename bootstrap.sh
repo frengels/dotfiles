@@ -6,6 +6,7 @@ stowables=(
   alacritty
   guile
   htop
+  neovim
 )
 
 for stowable in ${stowables[@]}
