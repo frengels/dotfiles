@@ -10,4 +10,18 @@ Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdtree'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'airblade/vim-gitgutter'
+
+Plug 'mattn/calendar-vim'
+Plug 'vimwiki/vimwiki'
 call plug#end()
+
+let mapleader=" "
+
+imap fd <Esc>
+
+let g:vimwiki_list = [
+			\{'path': '~/Documents/wiki/personal.wiki'}
+  \]
+
+au BufRead,BufNewFile *.wiki set filetype=vimwiki
+:autocmd FileType vimwiki map d :VimwikiMakeDiaryNot
