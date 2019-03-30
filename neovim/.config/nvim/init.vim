@@ -13,6 +13,8 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'mattn/calendar-vim'
 Plug 'vimwiki/vimwiki'
+
+Plug 'sbdchd/neoformat'
 call plug#end()
 
 let mapleader=" "
@@ -25,3 +27,7 @@ let g:vimwiki_list = [
 
 au BufRead,BufNewFile *.wiki set filetype=vimwiki
 :autocmd FileType vimwiki map d :VimwikiMakeDiaryNot
+
+set clipboard+=unnamedplus
+
+set matchpairs+=<:>

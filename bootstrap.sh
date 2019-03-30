@@ -7,6 +7,13 @@ stowables=(
   guile
   htop
   neovim
+  i3
+  xinit
+  polybar
+  backgrounds
+  kitty
+  xmodmap
+  gtk
 )
 
 for stowable in ${stowables[@]}
