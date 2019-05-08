@@ -2,6 +2,7 @@
 
 stowables=(
   git
+  gdb
   sway
   alacritty
   guile
