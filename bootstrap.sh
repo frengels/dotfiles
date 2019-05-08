@@ -4,6 +4,7 @@ stowables=(
   git
   gdb
   sway
+  waybar
   alacritty
   guile
   htop
