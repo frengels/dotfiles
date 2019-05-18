@@ -60,6 +60,10 @@ exec swayidle \
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+input "7805:11502:ROCCAT_ROCCAT_Kova_Mouse" {
+    pointer_accel -0.5
+    accel_profile flat
+}
 
 input "2:7:SynPS/2_Synaptics_TouchPad" {
     tap enabled
