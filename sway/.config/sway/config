@@ -14,7 +14,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term alacritty
+set $term termite
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
 set $menu j4-dmenu-desktop
@@ -83,13 +83,16 @@ input "1:1:AT_Translated_Set_2_keyboard" {
     bindsym $mod+Return exec $term
 
     # my own applications etc
-    bindsym XF86MonBrightnessUp exec light -A 10
-    bindsym XF86MonBrightnessDown exec light -U 10
+    bindsym XF86MonBrightnessUp exec light -A 5
+    bindsym XF86MonBrightnessDown exec light -U 5
 
     # sound settings
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +10%
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -10%
-    bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+    bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+    bindsym $mod+Print exec grim $(xdg-user-dir PICTURES)/$(date +'%Y-%m-%d-%H%M%S_grim.png')
+    bindsym $mod+Shift+Print exec grim -g "$(slurp)" $(xdg-user-dir PICTURES)/$(date +'%Y-%m-%d-%H%M%S_grim.png')
 
     # kill focused window
     bindsym $mod+Shift+q kill
