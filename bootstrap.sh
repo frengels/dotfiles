@@ -6,6 +6,7 @@ stowables=(
   sway
   waybar
   alacritty
+  termite
   guile
   htop
   neovim
