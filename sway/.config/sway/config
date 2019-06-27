@@ -80,6 +80,9 @@ input "5426:283:Razer_Razer_BlackWidow" {
     xkb_options ctrl:nocaps
 }
 
+output DVI-D-1 resolution 1920x1080 position 0,0
+output HDMI-A-1 resolution 1920x1080 position 1920,0
+
 ### Key bindings
 #
 # Basics:
