@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 stowables=(
+  zsh
   git
   gdb
   sway
