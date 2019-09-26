@@ -22,6 +22,8 @@ set $menu j4-dmenu-desktop
 # start waybar
 exec waybar
 
+exec export _JAVA_AWT_WM_NONREPARENTING=1
+
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
