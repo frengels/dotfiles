@@ -1,3 +1,3 @@
 set print pretty on
 
-guile (use-modules (gdb))
+#guile (use-modules (gdb))

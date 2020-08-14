@@ -18,6 +18,7 @@ stowables=(
   kitty
   xmodmap
   gtk
+  inputrc
 )
 
 for stowable in ${stowables[@]}
