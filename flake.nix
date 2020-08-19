@@ -22,6 +22,7 @@
 	    ./hosts/evy/configuration.nix
 	    ./hosts/evy/hardware.nix
 	    ./hosts/evy/kernel.nix
+	    ./modules/nix.nix
 	  ];
         };
       };
