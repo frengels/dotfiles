@@ -5,13 +5,6 @@
 { config, pkgs, ... }:
 
 {
-/*
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware.nix
-    ];
-    */
-
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = ''
@@ -23,9 +16,6 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.blacklistedKernelModules = [ "nouveau" ];
-  boot.kernelParams = [ "mitigations=off" ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
