@@ -6,6 +6,13 @@
     home.url = "github:rycee/home-manager/bqv-flakes";
     home.inputs.nixpkgs.follows = "nixpkgs";
 
+    nix.url = "github:nixos/nix/master";
+    nix.inputs.nixpkgs.follows = "nixpkgs";
+
+    dwarffs.url = "github:edolstra/dwarffs";
+    dwarffs.inputs.nixpkgs.follows = "nixpkgs";
+    dwarffs.inputs.nix.follows = "nix";
+
     emacs.url = "github:nix-community/emacs-overlay";
 
     mozilla = { url = "github:mozilla/nixpkgs-mozilla"; flake = false; };
@@ -22,7 +29,7 @@
 	    ./hosts/evy/configuration.nix
 	    ./hosts/evy/hardware.nix
 	    ./hosts/evy/kernel.nix
-	    ./modules/nix.nix
+	    ./profiles/nix.nix
 	  ];
         };
       };
