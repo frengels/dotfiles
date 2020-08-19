@@ -18,7 +18,10 @@
       nixosConfigurations = {
         evy = lib.nixosSystem {
           system = "x86_64-linux";
-          modules = [ (./hosts/evy/configuration.nix) ];
+          modules = [ 
+	    ./hosts/evy/configuration.nix
+	    ./hosts/evy/hardware.nix
+	  ];
         };
       };
     };

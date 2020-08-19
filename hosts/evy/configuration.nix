@@ -5,10 +5,12 @@
 { config, pkgs, ... }:
 
 {
+/*
   imports =
     [ # Include the results of the hardware scan.
       ./hardware.nix
     ];
+    */
 
   nix = {
     package = pkgs.nixFlakes;
