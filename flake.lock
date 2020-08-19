@@ -1,0 +1,99 @@
+{
+  "nodes": {
+    "emacs": {
+      "locked": {
+        "lastModified": 1597854158,
+        "narHash": "sha256-MzJYYwsCniGxbMAoahXToYPm57TeKVXk7eBd3dnTOHY=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "0f6995f9129d2240b45e6d192444f64d3a6b35a6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "type": "github"
+      }
+    },
+    "home": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1591751635,
+        "narHash": "sha256-KgGtyFlkI/fsp+j8VEgJ/ynY9B91aX35Xp04HlDLRTo=",
+        "owner": "rycee",
+        "repo": "home-manager",
+        "rev": "b3fee796fcd5531693d9b84ece76ad6836bb1cfa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rycee",
+        "ref": "bqv-flakes",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "master": {
+      "locked": {
+        "lastModified": 1597859356,
+        "narHash": "sha256-WIM50YBx4nCkFVs3FKQK2WOS7qBhQCQwCkzKG1R1kXA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "f77e427cf6ce9c4ef4e1a7d3b18a37b7e432a13c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "mozilla": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1594829078,
+        "narHash": "sha256-yRCkO499a5gucHmxgWb/QDqPt/UBTbuPURuPZ9DLmIc=",
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "rev": "efda5b357451dbb0431f983cca679ae3cd9b9829",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mozilla",
+        "repo": "nixpkgs-mozilla",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1597682354,
+        "narHash": "sha256-6J4Q9gYzIuYUjn9MLJvte5KY2ZBpQ+3prsSz+r/8le0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "1e3f09feaa5667be4ed6eca96a984b4642420b83",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "emacs": "emacs",
+        "home": "home",
+        "master": "master",
+        "mozilla": "mozilla",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
