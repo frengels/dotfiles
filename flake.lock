@@ -1,5 +1,28 @@
 {
   "nodes": {
+    "dwarffs": {
+      "inputs": {
+        "nix": [
+          "nix"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1597153508,
+        "narHash": "sha256-VHg3MYVgQ12LeRSU2PSoDeKlSPD8PYYEFxxwkVVDRd0=",
+        "owner": "edolstra",
+        "repo": "dwarffs",
+        "rev": "d181d714fd36eb06f4992a1997cd5601e26db8f5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "dwarffs",
+        "type": "github"
+      }
+    },
     "emacs": {
       "locked": {
         "lastModified": 1597854158,
@@ -68,6 +91,27 @@
         "type": "github"
       }
     },
+    "nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1597760477,
+        "narHash": "sha256-PbR5b3sBTtwEjPy5Drq8GmlUaHUs9bCtykua0xhPx38=",
+        "owner": "nixos",
+        "repo": "nix",
+        "rev": "1c8b550e34414d0f4cb0fa20322a2dfe06ce2de0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nix",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1597682354,
@@ -86,10 +130,12 @@
     },
     "root": {
       "inputs": {
+        "dwarffs": "dwarffs",
         "emacs": "emacs",
         "home": "home",
         "master": "master",
         "mozilla": "mozilla",
+        "nix": "nix",
         "nixpkgs": "nixpkgs"
       }
     }
