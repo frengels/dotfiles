@@ -18,7 +18,7 @@
     mozilla = { url = "github:mozilla/nixpkgs-mozilla"; flake = false; };
   };
 
-  outputs = { self, ... }@inputs: 
+  outputs = inputs:
     let
       lib = inputs.master.lib;
     in {
