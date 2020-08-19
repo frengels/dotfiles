@@ -7,7 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+      ./hardware.nix
     ];
 
   nix = {
@@ -16,12 +16,6 @@
       experimental-features = nix-command flakes ca-references
     '';
     trustedUsers = [ "frederik" ];
-  };
-
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    gtkUsePortal = true;
   };
 
   # Use the systemd-boot EFI boot loader.

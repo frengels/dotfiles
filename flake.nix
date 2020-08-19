@@ -11,10 +11,15 @@
     mozilla = { url = "github:mozilla/nixpkgs-mozilla"; flake = false; };
   };
 
-  outputs = { self, ... }@inputs: {
-    nixosConfigurations.evy = inputs.master.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [ ./configuration.nix ];
+  outputs = { self, ... }@inputs: 
+    let
+      lib = inputs.master.lib;
+    in {
+      nixosConfigurations = {
+        evy = lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [ (./hosts/evy/configuration.nix) ];
+        };
+      };
     };
-  };
 }
