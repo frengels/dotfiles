@@ -1,7 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    master.url = "github:NixOS/nixpkgs/master";
+    nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
 
     home.url = "github:rycee/home-manager/bqv-flakes";
     home.inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +24,7 @@
   outputs = inputs:
     let
       inherit (builtins) attrNames attrValues readDir;
-      inherit (inputs.master) lib;
+      inherit (inputs.nixpkgs) lib;
       inherit (lib) removeSuffix recursiveUpdate genAttrs filterAttrs;
       inherit (utils) pathsToImportedAttrs;
 
@@ -41,6 +41,12 @@
 
       pkgs = pkgsForSystem system;
     in {
+      nixosConfigurations = 
+        import ./hosts (recursiveUpdate inputs {
+	  inherit lib system utils pkgs;
+	  inherit (inputs) nixpkgs nixos-unstable;
+	});
+      /*
       nixosConfigurations = {
         evy = lib.nixosSystem rec {
           inherit system;
@@ -53,6 +59,7 @@
           ];
         };
       };
+      */
 
       devShell."${system}" = import ./shell.nix { inherit pkgs; };
 
