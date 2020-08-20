@@ -15,7 +15,10 @@
 
     emacs.url = "github:nix-community/emacs-overlay";
 
-    mozilla = { url = "github:mozilla/nixpkgs-mozilla"; flake = false; };
+    mozilla = {
+      url = "github:mozilla/nixpkgs-mozilla";
+      flake = false;
+    };
   };
 
   outputs = inputs:
@@ -27,39 +30,38 @@
 
       utils = import ./lib/utils.nix { inherit lib; };
 
-      pkgsForSystem = system: import inputs.nixpkgs rec {
-        inherit system;
-	config = {
-          allowUnfree = true;
-	};
+      system = "x86_64-linux";
 
-	overlays = (lib.attrsets.attrValues inputs.self.overlays) ++ [
-          inputs.nix.overlay
-	  inputs.emacs.overlay
-	];
-      };
+      pkgsForSystem = system:
+        import inputs.nixpkgs rec {
+          inherit system;
+          config = { allowUnfree = true; };
+          overlays = attrValues inputs.self.overlays;
+        };
+
+      pkgs = pkgsForSystem system;
     in {
       nixosConfigurations = {
         evy = lib.nixosSystem rec {
-          system = "x86_64-linux";
-	  pkgs = pkgsForSystem system;
-          modules = [ 
-	    ./hosts/evy/configuration.nix
-	    ./hosts/evy/hardware.nix
-	    ./hosts/evy/kernel.nix
-	    ./profiles/nix.nix
-	  ];
+          inherit system;
+          pkgs = pkgsForSystem system;
+          modules = [
+            ./hosts/evy/configuration.nix
+            ./hosts/evy/hardware.nix
+            ./hosts/evy/kernel.nix
+            ./profiles/nix.nix
+          ];
         };
       };
 
+      devShell."${system}" = import ./shell.nix { inherit pkgs; };
+
       overlay = import ./pkgs;
 
-      overlays =
-        let
-          overlayDir = ./overlays;
-	  fullPath = name: overlayDir + "${name}";
-          overlayPaths = map fullPath (attrNames (readDir overlayDir));
-        in
-          pathsToImportedAttrs overlayPaths;
+      overlays = let
+        overlayDir = ./overlays;
+        fullPath = name: overlayDir + "/${name}";
+        overlayPaths = map fullPath (attrNames (readDir overlayDir));
+      in pathsToImportedAttrs overlayPaths;
     };
 }
