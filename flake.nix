@@ -40,25 +40,12 @@
         };
 
       pkgs = pkgsForSystem system;
+
     in {
       nixosConfigurations = 
         import ./hosts (recursiveUpdate inputs {
 	  inherit lib system utils pkgs;
 	});
-      /*
-      nixosConfigurations = {
-        evy = lib.nixosSystem rec {
-          inherit system;
-          pkgs = pkgsForSystem system;
-          modules = [
-            ./hosts/evy/configuration.nix
-            ./hosts/evy/hardware.nix
-            ./hosts/evy/kernel.nix
-            ./profiles/nix.nix
-          ];
-        };
-      };
-      */
 
       devShell."${system}" = import ./shell.nix { inherit pkgs; };
 

@@ -14,7 +14,7 @@ let
 
 	  global = {
             networking.hostName = hostName;
-	    nix.nixPath = let path = ../.; in
+	    nix.nixPath = let path = toString ../.; in
 	      [
 	        "nixpkgs=${nixpkgs}"
 		"nixos=${nixos-unstable}"
@@ -43,7 +43,7 @@ let
 	  flakeModules = attrValues (removeAttrs self.nixosModules [ "profiles" ]);
 
 	in
-	flakeModules ++ [ core global local home-manager overrides ];
+	flakeModules ++ [ core global local home-manager ];
     };
   hosts = recImport {
     dir = ./.;
