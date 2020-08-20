@@ -19,7 +19,7 @@ in
 	then
 	  let name = removeSuffix ".nix" n; in nameValuePair (name) (_import name)
         else
-          nameValuePair ("") (null)
+          nameValuePair ("") (null))
       (readDir dir);
 
   pathsToImportedAttrs = paths:
