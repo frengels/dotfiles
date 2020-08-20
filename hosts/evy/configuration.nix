@@ -165,7 +165,7 @@
     isNormalUser = true;
     home = "/home/frederik";
     description = "Frederik Engels";
-    extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
+    extraGroups = [ "wheel" "networkmanager" "video" "audio" "adbusers" ];
     shell = pkgs.fish;
   };
 
