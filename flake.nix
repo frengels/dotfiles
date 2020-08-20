@@ -44,7 +44,6 @@
       nixosConfigurations = 
         import ./hosts (recursiveUpdate inputs {
 	  inherit lib system utils pkgs;
-	  inherit (inputs) nixpkgs nixos-unstable;
 	});
       /*
       nixosConfigurations = {
