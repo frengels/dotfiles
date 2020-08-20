@@ -6,9 +6,14 @@
 
 {
   # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    editor = false;
+    # memtest86 = true;
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
+  hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
   hardware.cpu.intel.updateMicrocode = true;
 
@@ -59,6 +64,7 @@
   networking.hostName = "evy";
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
+  networking.networkmanager.dns = "systemd-resolved";
 
   services.nscd.enable = true;
 
@@ -119,7 +125,11 @@
 
   # Enable sound.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio = {
+    enable = true;
+    package = pkgs.pulseaudioFull;
+    support32Bit = true;
+  };
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
@@ -155,7 +165,7 @@
     isNormalUser = true;
     home = "/home/frederik";
     description = "Frederik Engels";
-    extraGroups = [ "wheel" "networkmanager" "video" ];
+    extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
     shell = pkgs.fish;
   };
 

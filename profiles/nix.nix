@@ -5,6 +5,7 @@
     extraOptions = ''
       experimental-features = nix-command flakes ca-references
     '';
-    trustedUsers = [ "@wheel" ];
+    allowedUsers = [ "*" ];
+    trustedUsers = [ "root" "@wheel" ];
   };
 }
