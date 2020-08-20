@@ -20,11 +20,29 @@
 
   outputs = inputs:
     let
-      lib = inputs.master.lib;
+      inherit (builtins) attrNames attrValues readDir;
+      inherit (inputs.master) lib;
+      inherit (lib) removeSuffix recursiveUpdate genAttrs filterAttrs;
+      inherit (utils) pathsToImportedAttrs;
+
+      utils = import ./lib/utils.nix { inherit lib; };
+
+      pkgsForSystem = system: import inputs.nixpkgs rec {
+        inherit system;
+	config = {
+          allowUnfree = true;
+	};
+
+	overlays = (lib.attrsets.attrValues inputs.self.overlays) ++ [
+          inputs.nix.overlay
+	  inputs.emacs.overlay
+	];
+      };
     in {
       nixosConfigurations = {
-        evy = lib.nixosSystem {
+        evy = lib.nixosSystem rec {
           system = "x86_64-linux";
+	  pkgs = pkgsForSystem system;
           modules = [ 
 	    ./hosts/evy/configuration.nix
 	    ./hosts/evy/hardware.nix
@@ -33,5 +51,15 @@
 	  ];
         };
       };
+
+      overlay = import ./pkgs;
+
+      overlays =
+        let
+          overlayDir = ./overlays;
+	  fullPath = name: overlayDir + "${name}";
+          overlayPaths = map fullPath (attrNames (readDir overlayDir));
+        in
+          pathsToImportedAttrs overlayPaths;
     };
 }
