@@ -3,6 +3,8 @@ let
   cfg = config.programs.vscode;
 in {
   config = lib.mkIf cfg.enable {
+    nixpkgs.config.allowUnfree = true;
+
     programs.vscode = {
       package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
