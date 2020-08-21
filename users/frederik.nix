@@ -19,6 +19,7 @@ in
       ./editor/neovim
       ./termite
       ./htop
+      ./vscode
     ];
 
     programs.home-manager.enable = true;
@@ -29,7 +30,9 @@ in
       userEmail = "frederik.engels92@gmail.com";
     };
 
+    programs.neovim.enable = true;
     programs.termite.enable = true;
     programs.htop.enable = true;
+    programs.vscode.enable = true;
   };
 }

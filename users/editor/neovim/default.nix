@@ -1,37 +1,41 @@
 { config, lib, pkgs, ... }:
-{
-  programs.neovim = {
-    enable = true;
+let
+  cfg = config.programs.neovim;
+in {
+  config = lib.mkIf cfg.enable rec {
+    programs.neovim = {
+      enable = true;
 
-    extraConfig = ''
-      let mapleader=" "
+      extraConfig = ''
+        let mapleader=" "
 
-      imap fd <Esc>
+        imap fd <Esc>
 
-      au BufRead,BufNewFile *.wiki set filetype=vimwiki
-      :autocmd FileType vimwiki map d :VimwikiMakeDiaryNot
+        au BufRead,BufNewFile *.wiki set filetype=vimwiki
+        :autocmd FileType vimwiki map d :VimwikiMakeDiaryNot
 
-      set clipboard+=unnamedplus
+        set clipboard+=unnamedplus
 
-      set matchpairs+=<:>
-    '';
+        set matchpairs+=<:>
+      '';
 
-    plugins = with pkgs.vimPlugins; [
-      ultisnips
-      vim-snippets
-      fzf-vim
-      lightline-vim
-      vim-multiple-cursors
-      vim-eunuch
-      vim-surround
-      vim-fugitive
-      nerdtree
-      editorconfig-vim
-      vim-gitgutter
+      plugins = with pkgs.vimPlugins; [
+        ultisnips
+        vim-snippets
+        fzf-vim
+        lightline-vim
+        vim-multiple-cursors
+        vim-eunuch
+        vim-surround
+        vim-fugitive
+        nerdtree
+        editorconfig-vim
+        vim-gitgutter
 
-      calendar-vim
-      vimwiki
-      neoformat
-    ];
+        calendar-vim
+        vimwiki
+        neoformat
+      ];
+    };
   };
 }
