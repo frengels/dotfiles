@@ -20,6 +20,7 @@ in
       ./termite
       ./htop
       ./vscode
+      ./direnv
     ];
 
     programs.home-manager.enable = true;
@@ -34,5 +35,6 @@ in
     programs.termite.enable = true;
     programs.htop.enable = true;
     programs.vscode.enable = true;
+    programs.direnv.enable = true;
   };
 }
