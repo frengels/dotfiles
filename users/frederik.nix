@@ -26,6 +26,7 @@ in
     programs.home-manager.enable = true;
 
     programs.git = {
+      package = pkgs.gitFull;
       enable = true;
       userName = fullName;
       userEmail = "frederik.engels92@gmail.com";
