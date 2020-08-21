@@ -1,6 +1,6 @@
 { home, lib, pkgs, nixpkgs, nixos-unstable, self, system, utils, ... }:
 let
-  inherit (utils) recImport;
+  inherit (utils) recImport recImportFromDirs;
   inherit (builtins) attrValues removeAttrs;
 
   config = hostName:
@@ -45,7 +45,7 @@ let
 	in
 	flakeModules ++ [ core global local home-manager ];
     };
-  hosts = recImport {
+  hosts = recImportFromDirs {
     dir = ./.;
     _import = config;
   };
