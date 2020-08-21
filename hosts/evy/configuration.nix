@@ -55,6 +55,7 @@
       pkgs.open-sans
     ];
     fontconfig = {
+      enable = true;
       # penultimate.enable = true;
       defaultFonts = {
         sansSerif = [ "Open Sans" ];

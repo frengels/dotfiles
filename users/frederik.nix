@@ -16,6 +16,7 @@ in
   home-manager.users.frederik = {
 
     imports = [
+      ./core
       ./editor/neovim
       ./termite
       ./htop
