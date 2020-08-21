@@ -68,9 +68,6 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   networking.hostName = "evy";
-  networking.networkmanager.enable = true;
-  networking.networkmanager.wifi.backend = "iwd";
-  # networking.networkmanager.dns = "systemd-resolved";
 
   services.nscd.enable = true;
 
