@@ -41,5 +41,6 @@ in
     programs.direnv.enable = true;
     wayland.windowManager.sway.enable = true;
     services.redshift.enable = true;
+    services.lorri.enable = true;
   };
 }
