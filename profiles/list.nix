@@ -1,3 +1,5 @@
 [
-  # no default profiles
+  ./core.nix
+  ./android.nix
+  ./nix.nix
 ]

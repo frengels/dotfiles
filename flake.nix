@@ -23,38 +23,84 @@
 
   outputs = inputs:
     let
+      allSystems = [ "x86_64-linux" "i686-linux" "aarch64-linux" ];
+      diffTrace = left: right: string: value: if left != right then builtins.trace string value else value;
+
       inherit (builtins) attrNames attrValues readDir;
-      inherit (inputs.nixpkgs) lib;
-      inherit (lib) removeSuffix recursiveUpdate genAttrs filterAttrs;
+      inherit (lib) removeSuffix recursiveUpdate genAttrs filterAttrs mapAttrs;
       inherit (utils) pathsToImportedAttrs;
+
+      config = {
+        allowUnfree = true;
+	android_sdk.accept_license = true;
+      };
+
+      channels = with inputs; {
+        pkgs = nixos-unstable;
+	modules = nixpkgs;
+	lib = nixpkgs;
+      };
+
+      inherit (channels.lib) lib;
 
       utils = import ./lib/utils.nix { inherit lib; };
 
       system = "x86_64-linux";
 
-      pkgsForSystem = system:
-        import inputs.nixpkgs rec {
-          inherit system;
-          config = { allowUnfree = true; };
-          overlays = attrValues inputs.self.overlays;
-        };
+      channelToOverlay = { system, config, flake, branch }: (final: prev: { ${flake} =
+        mapAttrs (k: v: diffTrace (baseNameOf inputs.${flake}) (baseNameOf prev.path) "pkgs.${k} pinned to nixpkgs/${branch}" v)
+	inputs.${flake}.legacyPackages.${system};
+      });
 
-      pkgs = pkgsForSystem system;
+      flakeToOverlay = { system, flake, name }: (final: prev: { ${flake} =
+        mapAttrs (k: v: diffTrace (baseNameOf inputs.${flake}) (baseNameOf prev.path) "pkgs.${k} pinned to ${name}" v)
+	inputs.${flake}.legacyPackages.${system};
+      });
+
+      pkgsForSystem = system: import channels.pkgs rec {
+        inherit system config;
+
+	overlays = (attrValues inputs.self.overlays) ++ [
+	  (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
+	  (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
+	  (import inputs.mozilla)
+	  inputs.nix.overlay
+	  inputs.emacs.overlay
+	  inputs.self.overlay
+	];
+      };
+
+      forAllSystems = f: lib.genAttrs allSystems (system: f {
+        inherit system;
+	pkgs = pkgsForSystem system;
+      });
 
     in {
-      nixosConfigurations = 
+      nixosConfigurations =
+        let
+	  pkgs = pkgsForSystem system;
+	in
         import ./hosts (recursiveUpdate inputs {
 	  inherit lib system utils pkgs;
 	});
 
-      devShell."${system}" = import ./shell.nix { inherit pkgs; };
+      # devShell."${system}" = import ./shell.nix { inherit pkgs; };
 
       overlay = import ./pkgs;
 
-      overlays = let
-        overlayDir = ./overlays;
-        fullPath = name: overlayDir + "/${name}";
-        overlayPaths = map fullPath (attrNames (readDir overlayDir));
-      in pathsToImportedAttrs overlayPaths;
+      overlays = lib.listToAttrs (map (name: {
+        name = lib.removeSuffix ".nix" name;
+	value = import (./overlays + "/${name}");
+      }) (attrNames (readDir ./overlays)));
+
+      nixosModules = let
+        moduleList = (import ./modules/nixos.nix) ++ (import ./modules/home-manager.nix);
+	modulesAttrs = pathsToImportedAttrs moduleList;
+
+	profilesList = import ./profiles/list.nix;
+	profilesAttrs = { profiles = pathsToImportedAttrs profilesList; };
+
+      in
+      modulesAttrs // profilesAttrs;
     };
 }
