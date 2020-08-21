@@ -21,6 +21,7 @@ in
       ./htop
       ./vscode
       ./direnv
+      ./sway
     ];
 
     programs.home-manager.enable = true;
@@ -37,5 +38,6 @@ in
     programs.htop.enable = true;
     programs.vscode.enable = true;
     programs.direnv.enable = true;
+    wayland.windowManager.sway.enable = true;
   };
 }
