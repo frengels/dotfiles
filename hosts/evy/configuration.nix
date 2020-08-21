@@ -69,7 +69,7 @@
   networking.hostName = "evy";
   networking.networkmanager.enable = true;
   networking.networkmanager.wifi.backend = "iwd";
-  networking.networkmanager.dns = "systemd-resolved";
+  # networking.networkmanager.dns = "systemd-resolved";
 
   services.nscd.enable = true;
 
@@ -166,6 +166,7 @@
   #   isNormalUser = true;
   #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   # };
+  /*
   users.mutableUsers = false;
   users.users.frederik = {
     isNormalUser = true;
@@ -175,6 +176,7 @@
     extraGroups = [ "wheel" "networkmanager" "video" "audio" "adbusers" ];
     shell = pkgs.fish;
   };
+  */
 
   services.fstrim.enable = true;
 

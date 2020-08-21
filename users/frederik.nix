@@ -14,6 +14,10 @@ in
   };
 
   home-manager.users.frederik = {
+    imports = [
+      ./editor/neovim
+    ];
+
     programs.git = {
       enable = true;
       userName = fullName;
