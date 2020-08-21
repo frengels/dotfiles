@@ -11,6 +11,17 @@ in
 {
   inherit mapFilterAttrs genAttrs';
 
+  recImportFromDirs = { dir, _import ? base: import "${dir}/${base}" }:
+    mapFilterAttrs
+      (_: v: v != null)
+      (n: v:
+        if v == "directory"
+	then
+	  nameValuePair (n) (_import n)
+	else
+	  nameValuePair ("") (null))
+      (readDir dir);
+
   recImport = { dir, _import ? base: import "${dir}/${base}.nix" }:
     mapFilterAttrs
       (_: v: v != null)
