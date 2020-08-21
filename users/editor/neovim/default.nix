@@ -4,8 +4,6 @@ let
 in {
   config = lib.mkIf cfg.enable rec {
     programs.neovim = {
-      enable = true;
-
       extraConfig = ''
         let mapleader=" "
 
