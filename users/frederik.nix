@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   fullName = "Frederik Engels";
 in
@@ -14,14 +14,22 @@ in
   };
 
   home-manager.users.frederik = {
+
     imports = [
       ./editor/neovim
+      ./termite
+      ./htop
     ];
+
+    programs.home-manager.enable = true;
 
     programs.git = {
       enable = true;
       userName = fullName;
       userEmail = "frederik.engels92@gmail.com";
     };
+
+    programs.termite.enable = true;
+    programs.htop.enable = true;
   };
 }
