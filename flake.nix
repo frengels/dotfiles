@@ -86,6 +86,11 @@
 
       # devShell."${system}" = import ./shell.nix { inherit pkgs; };
 
+      legacyPackages = forAllSystems ({ pkgs, ... }: pkgs);
+
+      packages = forAllSystems ({ pkgs, ... }: lib.filterAttrs (_: p: (p.meta.broken or null) != true) {
+      });
+
       overlay = import ./pkgs;
 
       overlays = lib.listToAttrs (map (name: {
