@@ -24,6 +24,8 @@ in
       ./direnv
       ./sway
       ./redshift
+      ./gtk
+      ./qt
     ];
 
     programs.home-manager.enable = true;
@@ -43,5 +45,6 @@ in
     wayland.windowManager.sway.enable = true;
     services.redshift.enable = true;
     services.lorri.enable = true;
+    gtk.enable = true;
   };
 }
