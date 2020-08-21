@@ -22,6 +22,7 @@ in
       ./vscode
       ./direnv
       ./sway
+      ./redshift
     ];
 
     programs.home-manager.enable = true;
@@ -39,5 +40,6 @@ in
     programs.vscode.enable = true;
     programs.direnv.enable = true;
     wayland.windowManager.sway.enable = true;
+    services.redshift.enable = true;
   };
 }
