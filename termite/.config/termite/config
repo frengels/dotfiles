@@ -1,6 +1,0 @@
-[options]
-font = Fira Code 11
-scrollback_lines = 10000
-
-[colors]
-background = rgba(48, 48, 48, 1.0)
