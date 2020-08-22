@@ -7,6 +7,8 @@ in {
       source-code-pro
     ];
     wayland.windowManager.sway = {
+      systemdIntegration = true;
+
       extraSessionCommands = ''
         export SDL_VIDEODRIVER=wayland
         export QT_QPA_PLATFORM=wayland-egl
