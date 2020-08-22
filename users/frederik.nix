@@ -31,6 +31,7 @@ in
       ./qt
       ./git
       ./alacritty
+      ./guile
 
       ../modules/home
     ];
