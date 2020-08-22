@@ -2,6 +2,7 @@
 let
   fullName = "Frederik Engels";
 in
+
 {
   users.mutableUsers = false;
   users.users.frederik = {
@@ -13,7 +14,9 @@ in
     shell = pkgs.fish;
   };
 
-  home-manager.users.frederik = {
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
+  home-manager.users.frederik = { ... }: {
 
     imports = [
       ./core
@@ -28,6 +31,8 @@ in
       ./qt
       ./git
       ./alacritty
+
+      ../modules/home
     ];
 
     programs.home-manager.enable = true;
@@ -48,5 +53,6 @@ in
     services.lorri.enable = true;
     gtk.enable = true;
     programs.alacritty.enable = true;
+    programs.guile.enable = true;
   };
 }

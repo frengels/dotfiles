@@ -28,8 +28,6 @@ let
   };
 in {
   config = lib.mkIf cfg.enable {
-    nixpkgs.config.allowUnfree = true;
-
     programs.vscode = {
       # disable for now as it doesn't show all extensions
       # package = pkgs.vscodium;

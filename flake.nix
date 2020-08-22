@@ -99,12 +99,11 @@
       }) (attrNames (readDir ./overlays)));
 
       nixosModules = let
-        moduleList = (import ./modules/nixos.nix) ++ (import ./modules/home-manager.nix);
+        moduleList = (import ./modules/nixos.nix);
 	modulesAttrs = pathsToImportedAttrs moduleList;
 
 	profilesList = import ./profiles/list.nix;
 	profilesAttrs = { profiles = pathsToImportedAttrs profilesList; };
-
       in
       modulesAttrs // profilesAttrs;
     };
