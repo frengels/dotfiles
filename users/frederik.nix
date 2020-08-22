@@ -32,6 +32,7 @@ in
       ./git
       ./alacritty
       ./guile
+      ./kitty
 
       ../modules/home
     ];
@@ -55,5 +56,6 @@ in
     gtk.enable = true;
     programs.alacritty.enable = true;
     programs.guile.enable = true;
+    programs.kitty.enable = true;
   };
 }
