@@ -4,8 +4,9 @@ let
 in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      source-code-pro
+      fira-mono
     ];
+
     wayland.windowManager.sway = {
       systemdIntegration = true;
 
@@ -120,7 +121,7 @@ in {
             position = "1920,0";
           };
         };
-        fonts = [ "Source Code Pro 10" ];
+        fonts = [ "Fira Mono 10" ];
 
         gaps = {
           bottom = 5;
@@ -143,6 +144,11 @@ in {
 	  {
 	    id = "bar-top";
 	    mode = "dock";
+
+            fonts = [
+              "Fira Mono 8"
+	    ];
+
             position = "top";
 	    workspaceButtons = true;
 	  }
