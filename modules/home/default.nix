@@ -2,5 +2,6 @@
 {
   imports = [
     ./programs/guile.nix
+    ./programs/gdb.nix
   ];
 }

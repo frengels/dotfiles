@@ -33,6 +33,7 @@ in
       ./alacritty
       ./guile
       ./kitty
+      ./gdb
 
       ../modules/home
     ];
@@ -57,5 +58,6 @@ in
     programs.alacritty.enable = true;
     programs.guile.enable = true;
     programs.kitty.enable = true;
+    programs.gdb.enable = true;
   };
 }
