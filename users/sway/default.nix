@@ -138,6 +138,15 @@ in {
         window = {
           titlebar = true;
         };
+
+	bars = [
+	  {
+	    id = "bar-top";
+	    mode = "dock";
+            position = "top";
+	    workspaceButtons = true;
+	  }
+	];
       };
     };
   };
