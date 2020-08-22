@@ -27,6 +27,7 @@ in
       ./gtk
       ./qt
       ./git
+      ./alacritty
     ];
 
     programs.home-manager.enable = true;
@@ -46,5 +47,6 @@ in
     services.redshift.enable = true;
     services.lorri.enable = true;
     gtk.enable = true;
+    programs.alacritty.enable = true;
   };
 }
