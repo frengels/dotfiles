@@ -1,9 +1,16 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.programs.termite;
+  cfg = config.profiles.termite;
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.termite.enable = mkEnableOption "termite";
+  };
+
+  config = mkIf cfg.enable {
     programs.termite = {
+      enable = true;
+
       allowBold = true;
       audibleBell = false;
       clickableUrl = true;

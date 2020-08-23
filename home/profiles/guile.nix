@@ -1,9 +1,16 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.programs.guile;
+  cfg = config.profiles.guile;
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.guile.enable = mkEnableOption "guile";
+  };
+
+  config = mkIf cfg.enable {
     programs.guile = {
+      enable = true;
+
       config = ''
         (use-modules (ice-9 readline))
         (activate-readline)

@@ -1,8 +1,13 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.gtk;
+  cfg = config.profiles.gtk;
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.gtk.enable = mkEnableOption "gtk";
+  };
+  
+  config = mkIf cfg.enable {
     gtk = {
       font = {
         name = "Open Sans 11";

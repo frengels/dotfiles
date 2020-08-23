@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   fullName = "Frederik Engels";
-in
-
-{
+in {
   users.mutableUsers = false;
   users.users.frederik = {
     isNormalUser = true;
@@ -19,45 +17,35 @@ in
   home-manager.users.frederik = { ... }: {
 
     imports = [
-      ./core
-      ./editor/neovim
-      ./termite
-      ./htop
-      ./vscode
-      ./direnv
-      ./sway
-      ./redshift
-      ./gtk
-      ./qt
-      ./git
-      ./alacritty
-      ./guile
-      ./kitty
-      ./gdb
-
-      ../modules/home
+      ../home/modules
+      ../home/profiles
     ];
+
+    home.enableDebugInfo = false;
 
     programs.home-manager.enable = true;
 
-    programs.git = {
-      enable = true;
-      userName = fullName;
-      userEmail = "frederik.engels92@gmail.com";
+    profiles = {
+      git = {
+        enable = true;
+	userName = fullName;
+	userEmail = "frederik.engels92@gmail.com";
+      };
+      xdg.enable = true;
+      sway.enable = true;
+      kitty.enable = true;
+      gdb.enable = true;
+      guile.enable = true;
+      alacritty.enable = true;
+      qt.enable = true;
+      gtk.enable = true;
+      redshift.enable = true;
+      lorri.enable = true;
+      direnv.enable = true;
+      htop.enable = true;
+      termite.enable = true;
+      neovim.enable = true;
+      vscode.enable = true;
     };
-
-    programs.neovim.enable = true;
-    programs.termite.enable = true;
-    programs.htop.enable = true;
-    programs.vscode.enable = true;
-    programs.direnv.enable = true;
-    wayland.windowManager.sway.enable = true;
-    services.redshift.enable = true;
-    services.lorri.enable = true;
-    gtk.enable = true;
-    programs.alacritty.enable = true;
-    programs.guile.enable = true;
-    programs.kitty.enable = true;
-    programs.gdb.enable = true;
   };
 }

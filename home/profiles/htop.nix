@@ -1,10 +1,16 @@
 { config, lib, pkgs, ... }:
-
+with lib;
 let
-  cfg = config.programs.htop;
+  cfg = config.profiles.htop;
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.htop.enable = mkEnableOption "htop";
+  };
+
+  config = mkIf cfg.enable {
     programs.htop = {
+      enable = true;
+
       colorScheme = 0;
       accountGuestInCpuMeter = false;
       cpuCountFromZero = true;

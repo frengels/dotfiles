@@ -1,13 +1,20 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.wayland.windowManager.sway;
+  cfg = config.profiles.sway;
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.sway.enable = mkEnableOption "sway";
+  };
+
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       fira-mono
     ];
 
     wayland.windowManager.sway = {
+      enable = true;
+
       systemdIntegration = true;
 
       extraSessionCommands = ''

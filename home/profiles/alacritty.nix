@@ -1,12 +1,18 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.programs.alacritty;
+  cfg = config.profiles.alacritty;
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.alacritty.enable = mkEnableOption "alacritty";
+  };
+
+  config = mkIf cfg.enable {
     home.packages = with pkgs; [
       fira-mono # for monospace font
       xdg_utils # for xdg-open
     ];
+
 
     programs.alacritty.settings = {
       window = {

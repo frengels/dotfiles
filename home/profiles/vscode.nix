@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.programs.vscode;
+  cfg = config.profiles.vscode;
 
   vscode-clangd = pkgs.vscode-utils.buildVscodeMarketplaceExtension rec {
 
@@ -27,8 +28,15 @@ let
     };
   };
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.vscode.enable = mkEnableOption "vscode";
+  };
+
+  config = {
+
     programs.vscode = {
+      enable = true;
+
       # disable for now as it doesn't show all extensions
       # package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
@@ -43,9 +51,5 @@ in {
 	vscode-clangd
       ];
     };
-
-    home.packages = with pkgs; [
-      clang-tools
-    ];
   };
 }

@@ -1,9 +1,17 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.programs.neovim;
+  cfg = config.profiles.neovim;
 in {
-  config = lib.mkIf cfg.enable rec {
+  options = {
+    profiles.neovim.enable = mkEnableOption "neovim";
+  };
+
+  config = mkIf cfg.enable {
+
     programs.neovim = {
+      enable = true;
+
       extraConfig = ''
         let mapleader=" "
 

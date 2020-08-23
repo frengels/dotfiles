@@ -1,9 +1,16 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.programs.kitty;
+  cfg = config.profiles.kitty;
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.kitty.enable = mkEnableOption "kitty";
+  };
+
+  config = mkIf cfg.enable {
     programs.kitty = {
+      enable = true;
+
       font = {
         name = "Fira Mono";
 	package = pkgs.fira-mono;

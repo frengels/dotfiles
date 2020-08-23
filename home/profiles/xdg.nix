@@ -1,7 +1,17 @@
 { config, lib, pkgs, ... }:
+with lib;
+let
+  cfg = config.profiles.xdg;
+in {
+  options = {
+    profiles.xdg.enable = mkEnableOption "xdg";
+  };
 
-{
-    home.enableDebugInfo = false;
+  config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      xdg-user-dirs
+      xdg_utils
+    ];
 
     xdg = {
       enable = true;
@@ -31,5 +41,6 @@
         videos = "\$HOME/Videos";
         extraConfig = {};
       };
+    };
   };
 }

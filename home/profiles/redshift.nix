@@ -1,8 +1,13 @@
 { config, lib, pkgs, ... }:
+with lib;
 let
-  cfg = config.services.redshift;
+  cfg = config.profiles.redshift;
 in {
-  config = lib.mkIf cfg.enable {
+  options = {
+    profiles.redshift.enable = mkEnableOption "redshift";
+  };
+
+  config = mkIf cfg.enable {
     services.redshift = {
       package = pkgs.redshift-wlr;
       longitude = "6.083887";
@@ -23,4 +28,3 @@ in {
     };
   };
 }
-    
