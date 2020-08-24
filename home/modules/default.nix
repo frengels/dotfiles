@@ -3,5 +3,6 @@
   imports = [
     ./programs/gdb.nix
     ./programs/guile.nix
+    ./programs/emacs.nix
   ];
 }

@@ -17,5 +17,6 @@
     ./sway.nix
     ./neovim.nix
     ./vscode.nix
+    ./emacs.nix
   ];
 }

@@ -46,6 +46,7 @@ in {
       termite.enable = true;
       neovim.enable = true;
       vscode.enable = true;
+      emacs.enable = true;
     };
   };
 }
