@@ -18,6 +18,46 @@ in {
       package = cfg.package;
 
       settings = {
+        moe-theme = {
+          config = ''
+            (moe-dark)
+          '';
+        };
+
+        evil = {
+          commands = [ "evil-mode" ];
+          init = ''
+            (setq evil-want-integration t
+  	              evil-want-keybinding nil)
+            (evil-mode)
+          '';
+        };
+  
+        evil-collection = {
+          after = [ "evil" ];
+          config = ''
+            (evil-collection-init)
+          '';
+        };
+  
+        evil-escape = {
+          after = [ "evil" ];
+          init = ''
+            (setq-default evil-escape-key-sequence (kbd "fd"))
+            (setq-default evil-escape-delay 0.125)
+          '';
+          config = ''
+            (evil-escape-mode)
+          '';
+        };
+  
+        evil-surround = {
+          after = [ "evil" ];
+          config = ''
+            (global-evil-surround-mode 1)
+          '';
+        };
+
         general = {
           config = ''
             (with-eval-after-load 'evil
@@ -70,7 +110,7 @@ in {
 
                   "g" '(:ignore t :which-key "git"))))
           '';
-    };
+        };
 
         magit = {
           config = ''
@@ -78,17 +118,131 @@ in {
               (my-leader-def
                 "gs" '(magit-status :which-key "magit status")))
           '';
-    };
+        };
+
+        forge = {
+          after = [ "magit" ];
+        };
+
+        magit-gh-pulls = {
+          enable = false;
+
+          after = [ "magit" ];
+          hook = [
+            { magit-mode = "turn-on-magit-gitflow"; }
+          ];
+        };
 
         company = {
-      defer = 3;
-      config = ''
+          defer = 3;
+	  hook = [
+            { after-init = "global-company-mode"; }
+	  ];
+          config = ''
             (setq company-minimum-prefix-length 1)
             (with-eval-after-load 'general
               (general-define-key
                "TAB" 'company-ident-or-complete-common))
           '';
         };
+
+        org-bullets = {
+          hook = [ 
+            { org-mode = "org-bullets-mode"; }
+          ];
+        };
+
+        modern-cpp-font-lock = {
+          hook = [
+            { "c++-mode" = "modern-c++-font-lock-mode"; }
+          ];
+        };
+
+	ivy = {
+          config = ''
+            (setq ivy-height 20)
+            (setq ivy-use-virtual-buffers t)
+            (setq enable-recursive-minibuffers t)
+            (setq ivy-display-style 'fancy)
+            (ivy-mode t)
+            (with-eval-after-load 'projectile
+              (setq projectile-completion-system 'ivy))
+          '';
+	};
+
+	ivy-xref = {
+          init = ''
+            (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)
+          '';
+	};
+
+	counsel = {
+          after = [ "ivy" ];
+	  config = ''
+            (counsel-mode)
+          '';
+	};
+
+	ivy-rich = {
+          after = [ "ivy" ];
+         config = ''
+            (ivy-rich-mode t)
+          '';
+	};
+
+	swiper = {
+          after = [ "ivy" ];
+	  init = ''
+            (global-unset-key (kbd "C-s"))
+          '';
+	  config = ''
+            (with-eval-after-load 'evil
+              (with-eval-after-load 'general
+                (general-define-key
+                 :states 'motion
+                 "/" #'swiper)))
+          '';
+	};
+
+	lsp-mode = {
+          commands = [ "lsp" ];
+	  hook = [
+            { rust-mode = "lsp"; }
+	  ];
+          init = ''
+            (setq lsp-prefer-flymake nil)
+          '';
+          config = ''
+            (require 'lsp-clients)
+            (with-eval-after-load 'general
+            (my-leader-def
+              "l" '(:ignore t :which-key "lsp")
+              "lr" '(lsp-rename :which-key "rename")
+              "lf" '(:ignore t :which-key "find")
+              "lfd" '(lsp-find-definition :which-key "definition")
+              "lfD" '(lsp-find-declaration :which-key "declaration")))
+          '';
+	};
+
+	lsp-ui = {
+          hook = [
+            { lsp-mode = "lsp-ui-mode"; }
+	  ];
+
+          init = ''
+            (setq lsp-ui-flycheck-enable t)
+          '';
+
+          config = ''
+            (with-eval-after-load 'general
+              (my-leader-def
+                "lu" '(:ignore t :which-key "lsp-ui")))
+          '';
+ 	};
+
+	clang-format = {
+          extraPackages = [ pkgs.clang-tools ];
+	};
       };
     };
   };

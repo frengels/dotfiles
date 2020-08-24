@@ -15,6 +15,8 @@ let
   requiredPackages = epkgs: [ epkgs.use-package ];
   combinedPackages = epkgs: (cfg.extraPackages epkgs) ++ (packagesFromSettings epkgs) ++ (requiredPackages epkgs);
 
+  allExtraPackages = (foldl (a: b: a ++ b) [] (mapAttrsToList (n: v: v.extraPackages) cfg.settings));
+
   packageSpec = { config, name, ... }:
   {
     options = with lib; {
@@ -25,6 +27,11 @@ let
       name = mkOption {
         type = types.str;
 	default = name;
+      };
+
+      extraPackages = mkOption {
+        type = types.listOf types.package;
+	default = [];
       };
 
       defer = mkOption {
@@ -175,7 +182,7 @@ in {
   config = mkIf cfg.enable {
     home.packages = [
       (emacsWithPackages combinedPackages)
-    ];
+    ] ++ allExtraPackages;
 
     home.file.".emacs.d/init.el" = {
       text = ''
