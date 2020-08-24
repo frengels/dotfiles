@@ -18,5 +18,9 @@
     ./neovim.nix
     ./vscode.nix
     ./emacs.nix
+    ./chromium.nix
+    ./mpv.nix
+    ./feh.nix
+    ./obs-studio.nix
   ];
 }

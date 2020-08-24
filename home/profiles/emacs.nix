@@ -241,6 +241,7 @@ in {
  	};
 
 	clang-format = {
+	  enable = false;
           extraPackages = [ pkgs.clang-tools ];
 	};
       };
