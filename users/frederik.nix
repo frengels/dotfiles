@@ -47,6 +47,16 @@ in {
       neovim.enable = true;
       vscode.enable = true;
       emacs.enable = true;
+      chromium.enable = true;
+      mpv.enable = true;
+      feh.enable = true;
+      obs-studio.enable = true;
     };
+
+    home.packages = with pkgs; [
+      jetbrains.idea-community
+      discord
+      tdesktop
+    ];
   };
 }

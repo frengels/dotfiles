@@ -1,7 +1,7 @@
 { config, lib, pkgs, ... }:
 with lib;
 let
-  cfg = profiles.feh;
+  cfg = config.profiles.feh;
 in {
   options = {
     profiles.feh.enable = mkEnableOption "feh";

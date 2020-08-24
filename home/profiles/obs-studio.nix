@@ -12,7 +12,6 @@ in {
        enable = true;
 
        plugins = with pkgs; [
-         obs-ndi
          obs-wlrobs
 	 obs-v4l2sink
        ];
