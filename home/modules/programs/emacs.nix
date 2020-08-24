@@ -11,7 +11,9 @@ let
 
   packagesFromSettings = epkgs:
     mapAttrsToList (n: v: epkgs.${n}) (filterAttrs (n: v: v.enable == true) (cfg.settings));
-  combinedPackages = epkgs: (cfg.extraPackages epkgs) ++ (packagesFromSettings epkgs);
+
+  requiredPackages = epkgs: [ epkgs.use-package ];
+  combinedPackages = epkgs: (cfg.extraPackages epkgs) ++ (packagesFromSettings epkgs) ++ (requiredPackages epkgs);
 
   packageSpec = { config, name, ... }:
   {
@@ -40,6 +42,13 @@ let
 	default = [];
       };
 
+      hook = mkOption {
+        type = types.listOf (types.addCheck
+	  (types.attrsOf types.str)
+	  (e: builtins.length (builtins.attrNames e) == 1));
+	default = [];
+      };
+
       init = mkOption {
         type = types.str;
 	default = "";
@@ -54,7 +63,7 @@ let
     };
   };
 
-  makeElisp = { enable, name, defer, after, commands, init, config, ... }: 
+  makeElisp = { enable, name, defer, after, commands, hook, init, config, ... }: 
     let
       # prefixes each line with the given prefix
       indentLinesWith = 
@@ -98,6 +107,22 @@ let
 	    len = builtins.length commands;
 	  in optionalString (len != 0)
 	    (prefix + (toSexpr commands));
+	
+	hook =
+	  let
+	    attrToCons = attr:
+	      let
+	        car = builtins.head (builtins.attrNames attr);
+		cdr = builtins.head (builtins.attrValues attr);
+	      in "(${car} . ${cdr})";
+	    mapConsString = l:
+	      concatMapStringsSep "\n" attrToCons hook;
+
+	    prefix = "\n  :hook\n";
+	    len = builtins.length hook;
+	  in optionalString (len != 0)
+	    (prefix + (prettifyCode (mapConsString hook)));
+
 
 	init = optionalString (init != "") 
 	  ("\n  :init\n" + (prettifyCode init));
@@ -112,6 +137,7 @@ let
 	attrs.defer
 	attrs.after
 	attrs.commands
+	attrs.hook
 	attrs.init
 	attrs.config
       ];
@@ -151,6 +177,15 @@ in {
       (emacsWithPackages combinedPackages)
     ];
 
+    home.file.".emacs.d/init.el" = {
+      text = ''
+        (eval-when-compile
+          (require 'use-package))
+
+      '' + (builtins.concatStringsSep "\n\n" settingsToElisp);
+    };
+
+    /*
     xdg.configFile."emacs/init.el" = {
       text = ''
         (eval-when-compile
@@ -158,5 +193,6 @@ in {
 
       '' + (builtins.concatStringsSep "\n\n" settingsToElisp);
     };
+    */
   };
 }
