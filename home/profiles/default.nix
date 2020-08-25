@@ -18,6 +18,7 @@
     ./neovim.nix
     ./vscode.nix
     ./emacs.nix
+    ./emacs2
     ./chromium.nix
     ./mpv.nix
     ./feh.nix
