@@ -8,7 +8,7 @@ in {
 
     profiles.emacs.package = mkOption {
       type = types.package;
-      default = pkgs.emacsGcc;
+      default = pkgs.emacs;
     };
   };
 
@@ -23,6 +23,18 @@ in {
             (moe-dark)
           '';
         };
+
+	which-key = {
+          config = ''
+            (which-key-mode t)
+          '';
+	};
+
+	direnv = {
+          config = ''
+            (direnv-mode)
+	  '';
+	};
 
         evil = {
           commands = [ "evil-mode" ];
@@ -60,14 +72,13 @@ in {
 
         general = {
           config = ''
-            (with-eval-after-load 'evil
               (progn
                 (general-define-key
                  :states 'motion
                  ";" #'evil-ex
                  ":" #'evil-repeat-find-char)
                 (general-create-definer my-leader-def
-                  :states '(normal insert motion visual emacs)
+                  :states '(normal insert emacs)
                   :keymaps 'override
                   :prefix "SPC"
                   :non-normal-prefix "M-SPC")
@@ -108,7 +119,7 @@ in {
                   "bl" '(next-buffer :which-key "next")
                   "bq" '(kill-current-buffer :which-key "kill current buffer")
 
-                  "g" '(:ignore t :which-key "git"))))
+                  "g" '(:ignore t :which-key "git")))
           '';
         };
 
@@ -215,12 +226,12 @@ in {
           config = ''
             (require 'lsp-clients)
             (with-eval-after-load 'general
-            (my-leader-def
-              "l" '(:ignore t :which-key "lsp")
-              "lr" '(lsp-rename :which-key "rename")
-              "lf" '(:ignore t :which-key "find")
-              "lfd" '(lsp-find-definition :which-key "definition")
-              "lfD" '(lsp-find-declaration :which-key "declaration")))
+              (my-leader-def
+                "l" '(:ignore t :which-key "lsp")
+                "lr" '(lsp-rename :which-key "rename")
+                "lf" '(:ignore t :which-key "find")
+                "lfd" '(lsp-find-definition :which-key "definition")
+                "lfD" '(lsp-find-declaration :which-key "declaration")))
           '';
 	};
 
@@ -243,6 +254,24 @@ in {
 	clang-format = {
 	  enable = false; # failing to download
           extraPackages = [ pkgs.clang-tools ];
+	};
+
+	rust-mode = {
+          hook = [
+            { rust-mode = "cargo-minor-mode"; }
+	  ];
+	};
+
+	flycheck = {
+          config = ''
+            ; (global-flycheck-mode)
+            (with-eval-after-load 'general
+              (my-leader-def
+                "c" '(:ignore t :which-key "flycheck")
+                "cj" '(flycheck-next-error :which-key "next error")
+                "ck" '(flycheck-previous-error :which-key "prev error")
+                "cl" '(flycheck-list-errors :which-key "list errors")))
+          '';
 	};
       };
     };
