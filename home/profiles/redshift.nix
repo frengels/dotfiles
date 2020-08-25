@@ -9,6 +9,7 @@ in {
 
   config = mkIf cfg.enable {
     services.redshift = {
+      enable = true;
       package = pkgs.redshift-wlr;
       longitude = "6.083887";
       latitude = "50.775345";
