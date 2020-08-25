@@ -10,8 +10,8 @@ in {
   config = mkIf cfg.enable {
     programs.direnv.enable = true;
 
-    home.packages = [
-      pkgs.nix-direnv
+    home.packages = with pkgs; [
+      nix-direnv
     ];
 
     xdg.configFile."direnv/direnvrc" = {
