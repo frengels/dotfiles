@@ -23,5 +23,6 @@
     ./mpv.nix
     ./feh.nix
     ./obs-studio.nix
+    ./fish.nix
   ];
 }

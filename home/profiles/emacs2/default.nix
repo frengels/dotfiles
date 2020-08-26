@@ -24,15 +24,16 @@ in {
       enable = true;
       package = cfg.package;
 
-      extraPackages = epkgs: with epkgs; [
+      extraPackages = epkgs: (with epkgs.elpaPackages; [
+        delight
+      ]) ++ (with epkgs.melpaPackages; [
+        format-all
         build-farm
         company-nixos-options
 	nix-mode
 	nix-update
 	nixos-options
 	nixpkgs-fmt
-
-        delight
 	use-package
 	which-key
 	paredit
@@ -43,11 +44,9 @@ in {
 	evil-escape
 	general
 	golden-ratio
-	org-plus-contrib
 	org-journal
 	org-bullets
 	evil-org
-	clang-format
 	modern-cpp-font-lock
 	magit
 	forge
@@ -74,10 +73,30 @@ in {
 	company-quickhelp
 	company-box
 	company-lsp
-      ];
+	lsp-mode
+	lsp-ui
+	ccls
+	cquery
+	dap-mode
+	rust-mode
+	cargo
+	flycheck
+	flycheck-popup-tip
+	flycheck-rust
+	yasnippet
+        gitconfig-mode	
+	lua-mode
+	yaml-mode
+	cmake-mode
+	meson-mode
+	
+      ]) ++ (with epkgs.orgPackages; [
+        org-plus-contrib
+      ]);
 
       overrides = final: prev: {};
     };
+
 
     # home.file.".emacs.d
   };

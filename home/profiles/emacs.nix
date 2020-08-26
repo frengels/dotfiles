@@ -18,6 +18,10 @@ in {
       package = cfg.package;
 
       settings = {
+        cmake-mode = {
+
+	};
+
         moe-theme = {
           config = ''
             (moe-dark)
@@ -272,6 +276,9 @@ in {
                 "ck" '(flycheck-previous-error :which-key "prev error")
                 "cl" '(flycheck-list-errors :which-key "list errors")))
           '';
+	};
+
+	cmake-mode = {
 	};
       };
     };
