@@ -85,8 +85,6 @@
 	  inherit lib system utils pkgs inputs;
 	};
 
-      # devShell."${system}" = import ./shell.nix { inherit pkgs; };
-
       legacyPackages = forAllSystems ({ pkgs, ... }: pkgs);
 
       packages = forAllSystems ({ pkgs, ... }: lib.filterAttrs (_: p: (p.meta.broken or null) != true) {
@@ -114,12 +112,10 @@
 	  build = "config.system.build";
 
           rebuild = pkgs.writeShellScriptBin "rebuild" ''
-            if [[ -z $1 ]]; then
-              echo "Usage: $(basename $0) host {switch|boot|test|iso}"
-            elif [[ $1 == "iso" ]]; then
-              nix build ${configs}.niximg.${build}.isoImage
+            if [ -n $2 ]; then
+              sudo nixos-rebuild $1 --flake ${toString ./.}#$2
             else
-              sudo -E nix shell -vv ${configs}.$1.${build}.toplevel -c switch-to-configuration $2
+              sudo nixos-rebuild $1 --flake ${toString ./.}
             fi
           '';
         in pkgs.mkShell {
