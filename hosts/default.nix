@@ -1,4 +1,4 @@
-{ home, lib, pkgs, nixpkgs, nixos-unstable, self, system, utils, ... }:
+{ lib, pkgs, system, utils, inputs, ... }:
 let
   inherit (utils) recImport recImportFromDirs;
   inherit (builtins) attrValues removeAttrs;
@@ -9,30 +9,26 @@ let
 
       modules =
         let
-	  inherit (home.nixosModules) home-manager;
-	  core = self.nixosModules.profiles.core;
+	  inherit (inputs.home.nixosModules) home-manager;
+	  core = inputs.self.nixosModules.profiles.core;
 
 	  global = {
             networking.hostName = hostName;
 	    nix.nixPath = let path = toString ../.; in
 	      [
-	        "nixpkgs=${nixpkgs}"
-		"nixos=${nixos-unstable}"
+	        "nixpkgs=${inputs.nixpkgs}"
+		"nixos=${inputs.nixos-unstable}"
 		"nixos-config=${path}/configuration.nix"
 		"nixpkgs-overlay=${path}/overlays"
               ];
 
-            nixpkgs = {
-	      inherit pkgs;
-	    };
-
 	    nix.registry = {
-	      nixos.flake = nixos-unstable;
-	      nixpkgs.flake = nixpkgs;
-	      self.flake = self;
+	      nixos.flake = inputs.nixos-unstable;
+	      nixpkgs.flake = inputs.nixpkgs;
+	      self.flake = inputs.self;
 	    };
 
-	    system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+	    system.configurationRevision = lib.mkIf (inputs.self ? rev) inputs.self.rev;
 	  };
 
 	  overrides = {
@@ -41,7 +37,7 @@ let
 
 	  local = import "${toString ./.}/${hostName}";
 
-	  flakeModules = attrValues (removeAttrs self.nixosModules [ "profiles" ]);
+	  flakeModules = attrValues (removeAttrs inputs.self.nixosModules [ "profiles" ]);
 
 	in
 	flakeModules ++ [ core global local home-manager ];

@@ -8,6 +8,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # Even though fish is already set as the user shell, this is required for
+    # other programs such as direnv and lorri to automatically integrate with fish
     programs.fish.enable = true;
   };
-};
+}

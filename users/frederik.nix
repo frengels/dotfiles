@@ -46,11 +46,15 @@ in {
       termite.enable = true;
       neovim.enable = true;
       vscode.enable = true;
-      emacs.enable = true;
+      emacs2 = {
+        enable = true;
+	package = pkgs.emacs;
+      };
       chromium.enable = true;
       mpv.enable = true;
       feh.enable = true;
       obs-studio.enable = true;
+      fish.enable = true;
     };
 
     home.packages = with pkgs; [
