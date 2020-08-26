@@ -7,7 +7,7 @@
     home.url = "github:rycee/home-manager/bqv-flakes";
     home.inputs.nixpkgs.follows = "nixpkgs";
 
-    nix.url = "github:nixos/nix/master";
+    nix.url = "github:NixOS/nix/master";
     nix.inputs.nixpkgs.follows = "nixpkgs";
 
     dwarffs.url = "github:edolstra/dwarffs";
@@ -15,6 +15,10 @@
     dwarffs.inputs.nix.follows = "nix";
 
     emacs.url = "github:nix-community/emacs-overlay";
+
+    wayland.url = "github:colemickens/nixpkgs-wayland";
+    wayland.inputs.nixpkgs.follows = "nixos-unstable";
+    wayland.inputs.cachix.follows = "nixpkgs";
 
     mozilla = {
       url = "github:mozilla/nixpkgs-mozilla";
@@ -67,6 +71,7 @@
 	  (import inputs.mozilla)
 	  inputs.nix.overlay
 	  inputs.emacs.overlay
+	  inputs.wayland.overlay
 	  inputs.self.overlay
 	];
       };
