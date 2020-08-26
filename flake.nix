@@ -1,6 +1,7 @@
 {
   inputs = {
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-20.03";
     nixpkgs.url = "github:NixOS/nixpkgs/master";
 
     home.url = "github:rycee/home-manager/bqv-flakes";
@@ -37,7 +38,7 @@
 
       channels = with inputs; {
         pkgs = nixos-unstable;
-	modules = nixpkgs;
+	modules = nixos-unstable;
 	lib = nixpkgs;
       };
 
@@ -61,8 +62,8 @@
         inherit system config;
 
 	overlays = (attrValues inputs.self.overlays) ++ [
-	  (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
-	  (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
+	  # (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
+	  # (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
 	  (import inputs.mozilla)
 	  inputs.nix.overlay
 	  inputs.emacs.overlay

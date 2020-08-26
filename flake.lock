@@ -96,6 +96,22 @@
         "type": "github"
       }
     },
+    "nixos-stable": {
+      "locked": {
+        "lastModified": 1598238449,
+        "narHash": "sha256-Oj4lmzeOhiQgqcEpeXkwANkCstiCDOtevCgg6GlcDh4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "14006b724f3d1f25ecf38238ee723d38b0c2f4ce",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-20.03",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixos-unstable": {
       "locked": {
         "lastModified": 1597943282,
@@ -135,6 +151,7 @@
         "home": "home",
         "mozilla": "mozilla",
         "nix": "nix",
+        "nixos-stable": "nixos-stable",
         "nixos-unstable": "nixos-unstable",
         "nixpkgs": "nixpkgs"
       }
