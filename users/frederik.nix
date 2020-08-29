@@ -62,6 +62,8 @@ in {
       discord
       tdesktop
       texlive.combined.scheme-full
+      libreoffice-fresh # need this for resume writing etc
+      valgrind
     ];
   };
 }
