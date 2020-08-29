@@ -61,6 +61,7 @@ in {
       jetbrains.idea-community
       discord
       tdesktop
+      texlive.combined.scheme-full
     ];
   };
 }
