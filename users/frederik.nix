@@ -64,6 +64,8 @@ in {
       texlive.combined.scheme-full
       libreoffice-fresh # need this for resume writing etc
       valgrind
+      gimp
+      poppler_utils
     ];
   };
 }
