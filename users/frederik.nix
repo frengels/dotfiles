@@ -66,6 +66,7 @@ in {
       valgrind
       gimp
       poppler_utils
+      zathura
     ];
   };
 }
