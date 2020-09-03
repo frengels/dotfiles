@@ -185,11 +185,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1598375299,
-        "narHash": "sha256-6u36gTz4gJi/NNpYHq8QJVymX2/N2UUZ0HBf0QBS0B8=",
+        "lastModified": 1599145425,
+        "narHash": "sha256-btH8Eb0m5CqmUMT5SXjrKWAVF1lgW+8pTnsOwdCcf8A=",
         "owner": "colemickens",
         "repo": "nixpkgs-wayland",
-        "rev": "feb2763e45ff14c1365fa075b544060a221adc6c",
+        "rev": "69b9088d374f16986c58c2152104e470f9b6b2ac",
         "type": "github"
       },
       "original": {
