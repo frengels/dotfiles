@@ -67,6 +67,7 @@ in {
       gimp
       poppler_utils
       zathura
+      julia # testing out julia for language design
     ];
   };
 }
