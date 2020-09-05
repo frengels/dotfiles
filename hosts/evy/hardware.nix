@@ -16,13 +16,14 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/c7745ef1-af0d-4750-9359-aa5ff5477970";
       fsType = "btrfs";
-      options = [ "noatime" "nodiratime" "discard" ];
+      options = [ "noatime" "nodiratime" ]; # already have offline trim enabled
     };
+  services.fstrim.enable = true;
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/6D11-8DC2";
       fsType = "vfat";
-      options = [ "noatime" "nodiratime" "discard" ];
+      options = [ "noatime" "nodiratime" ];
     };
 
   swapDevices = [ ];

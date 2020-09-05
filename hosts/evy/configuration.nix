@@ -159,25 +159,6 @@
 
   programs.light.enable = false;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.jane = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  # };
-  /*
-  users.mutableUsers = false;
-  users.users.frederik = {
-    isNormalUser = true;
-    hashedPassword = "$6$wogUsyO4$qwcGdg4U0w4sO3sdUKnuwl9Na0rynyB7jKiCJqRWc1I0rbrZwN0OW7mT6YNOK7zFvlSF0z5WSZjffOkOACHsM1";
-    home = "/home/frederik";
-    description = "Frederik Engels";
-    extraGroups = [ "wheel" "networkmanager" "video" "audio" "adbusers" ];
-    shell = pkgs.fish;
-  };
-  */
-
-  services.fstrim.enable = true;
-
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
