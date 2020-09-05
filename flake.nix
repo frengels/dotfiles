@@ -5,7 +5,7 @@
     nixos-stable.url = "github:NixOS/nixpkgs/nixos-20.03";
     nixpkgs.url = "github:NixOS/nixpkgs/master";
 
-    home.url = "github:rycee/home-manager/bqv-flakes";
+    home.url = "github:rycee/home-manager";
     home.inputs.nixpkgs.follows = "nixpkgs";
 
     nix.url = "github:NixOS/nix/master";
