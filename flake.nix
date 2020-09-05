@@ -6,19 +6,22 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
 
     home.url = "github:rycee/home-manager";
-    home.inputs.nixpkgs.follows = "nixpkgs";
+    home.inputs.nixpkgs.follows = "nixos-unstable-small";
+
+    emacs-dotfiles.url = "github:dreyri/dot-emacs-d";
+    emacs-dotfiles.inputs.nixpgs.follows = "nixos-unstable-small";
 
     nix.url = "github:NixOS/nix/master";
-    nix.inputs.nixpkgs.follows = "nixpkgs";
+    nix.inputs.nixpkgs.follows = "nixos-unstable-small";
 
     dwarffs.url = "github:edolstra/dwarffs";
-    dwarffs.inputs.nixpkgs.follows = "nixpkgs";
+    dwarffs.inputs.nixpkgs.follows = "nixos-unstable-small";
     dwarffs.inputs.nix.follows = "nix";
 
     emacs.url = "github:nix-community/emacs-overlay";
 
     wayland.url = "github:colemickens/nixpkgs-wayland";
-    wayland.inputs.nixpkgs.follows = "nixos-unstable";
+    wayland.inputs.nixpkgs.follows = "nixos-unstable-small";
     wayland.inputs.cachix.follows = "nixpkgs";
 
     mozilla = {

@@ -6,7 +6,7 @@
           "nix"
         ],
         "nixpkgs": [
-          "nixpkgs"
+          "nixos-unstable-small"
         ]
       },
       "locked": {
@@ -38,10 +38,28 @@
         "type": "github"
       }
     },
+    "emacs-dotfiles": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1599333503,
+        "narHash": "sha256-UnFaHaYf73U4MJ80wdsj6dhfBVGzdQWrrbtSYnkV16k=",
+        "owner": "dreyri",
+        "repo": "dot-emacs-d",
+        "rev": "2081306b9d9af8d8eda17207027e631af4ed2281",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dreyri",
+        "repo": "dot-emacs-d",
+        "type": "github"
+      }
+    },
     "home": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixos-unstable-small"
         ]
       },
       "locked": {
@@ -95,7 +113,7 @@
       "inputs": {
         "lowdown-src": "lowdown-src",
         "nixpkgs": [
-          "nixpkgs"
+          "nixos-unstable-small"
         ]
       },
       "locked": {
@@ -163,6 +181,22 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1598456342,
+        "narHash": "sha256-ZGooL/Vec1+VzDpJp7Y7crDIeGSWPu4kx5UIcNdc9hc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "386a4edc86d4aa273de5e3e0f95a551f949f5775",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1599307474,
         "narHash": "sha256-t/0k2jtkLx5q/3EtUCOXUIWnFGAykDM2kN4DbiY4E+U=",
         "owner": "NixOS",
@@ -181,13 +215,14 @@
       "inputs": {
         "dwarffs": "dwarffs",
         "emacs": "emacs",
+        "emacs-dotfiles": "emacs-dotfiles",
         "home": "home",
         "mozilla": "mozilla",
         "nix": "nix",
         "nixos-stable": "nixos-stable",
         "nixos-unstable": "nixos-unstable",
         "nixos-unstable-small": "nixos-unstable-small",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "wayland": "wayland"
       }
     },
@@ -197,7 +232,7 @@
           "nixpkgs"
         ],
         "nixpkgs": [
-          "nixos-unstable"
+          "nixos-unstable-small"
         ]
       },
       "locked": {
