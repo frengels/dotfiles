@@ -24,5 +24,6 @@
     ./feh.nix
     ./obs-studio.nix
     ./fish.nix
+    ./frederik-ssh.nix
   ];
 }

@@ -55,6 +55,7 @@ in {
       feh.enable = true;
       obs-studio.enable = true;
       fish.enable = true;
+      frederik-ssh.enable = true;
     };
 
     home.packages = with pkgs; [
