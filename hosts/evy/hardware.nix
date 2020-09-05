@@ -22,6 +22,7 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/6D11-8DC2";
       fsType = "vfat";
+      options = [ "noatime" "nodiratime" "discard" ];
     };
 
   swapDevices = [ ];
