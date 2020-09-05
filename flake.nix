@@ -1,6 +1,7 @@
 {
   inputs = {
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     nixos-stable.url = "github:NixOS/nixpkgs/nixos-20.03";
     nixpkgs.url = "github:NixOS/nixpkgs/master";
 
@@ -41,8 +42,8 @@
       };
 
       channels = with inputs; {
-        pkgs = nixos-unstable;
-	modules = nixos-unstable;
+        pkgs = nixos-unstable-small;
+	modules = nixos-unstable-small;
 	lib = nixpkgs;
       };
 
