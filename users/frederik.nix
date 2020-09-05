@@ -5,7 +5,7 @@ in {
   users.mutableUsers = false;
   users.users.frederik = {
     isNormalUser = true;
-    hashedPassword = import ../secrets/users/frederikpw.nix;
+    hashedPassword = import ../secrets/frederik/pw.nix;
     home = "/home/frederik";
     description = fullName;
     extraGroups = [ "wheel" "networkmanager" "input" "video" "audio" "adbusers" ];
