@@ -67,7 +67,8 @@ in {
       gimp
       poppler_utils
       zathura
-      julia # testing out julia for language design
+      # temporarily disabled as compiling hogs resources
+      # julia # testing out julia for language design
     ];
   };
 }
