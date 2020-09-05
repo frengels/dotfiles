@@ -39,7 +39,7 @@ in {
       alacritty.enable = true;
       qt.enable = true;
       gtk.enable = true;
-      redshift.enable = true;
+      redshift.enable = false; # redshift just gets too dark at night
       lorri.enable = true;
       direnv.enable = true;
       htop.enable = true;
