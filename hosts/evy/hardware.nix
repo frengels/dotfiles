@@ -16,7 +16,7 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/c7745ef1-af0d-4750-9359-aa5ff5477970";
       fsType = "btrfs";
-      options = [ "noatime" ];
+      options = [ "noatime" "nodiratime" "discard" ];
     };
 
   fileSystems."/boot" =
