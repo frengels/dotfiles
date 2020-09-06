@@ -73,7 +73,6 @@
 	  # (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
 	  # (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
 	  (import inputs.mozilla)
-	  inputs.emacs-dotfiles.overlay
 	  inputs.nix.overlay
 	  inputs.emacs.overlay
 	  inputs.wayland.overlay

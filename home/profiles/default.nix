@@ -17,8 +17,7 @@
     ./sway.nix
     ./neovim.nix
     ./vscode.nix
-    ./emacs.nix
-    ./emacs2
+    ./emacs
     ./chromium.nix
     ./mpv.nix
     ./feh.nix

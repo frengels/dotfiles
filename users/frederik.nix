@@ -46,10 +46,6 @@ in {
       termite.enable = true;
       neovim.enable = true;
       vscode.enable = true;
-      emacs2 = {
-        enable = true;
-	package = pkgs.emacs;
-      };
       chromium.enable = true;
       mpv.enable = true;
       feh.enable = true;
@@ -70,6 +66,7 @@ in {
       zathura
       # temporarily disabled as compiling hogs resources
       # julia # testing out julia for language design
+      eternal-terminal
     ];
   };
 }
