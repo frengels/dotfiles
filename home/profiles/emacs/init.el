@@ -20,7 +20,6 @@
 (add-to-list 'default-frame-alist
              '(font . "Fira Mono 11"))
 
-(load (concat user-emacs-directory "fe-locations.el"))
 (require 'package)
 
 (setq package-archives nil)
@@ -101,6 +100,8 @@
   (load-theme 'spacemacs-dark t))
 (use-package material-theme
   :defer t)
+
+(use-package format-all)
 
 (use-package hydra
   :config
