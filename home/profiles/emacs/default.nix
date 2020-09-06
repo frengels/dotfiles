@@ -18,6 +18,17 @@ in {
     programs.emacs = {
       enable = true;
       package = cfg.package;
+
+      extraPackages = epkgs: (with epkgs.elpaPackages; [
+        delight
+      ]) ++ (with epkgs.melpaPackages; [
+        use-package
+	avy
+      ]) ++ (with epkgs.orgPackages; [
+        org-plus-contrib
+      ]);
     };
+
+    home.file.".emacs.d/init.el".source = ./init.el;
   };
 }
