@@ -23,7 +23,13 @@ in {
         delight
       ]) ++ (with epkgs.melpaPackages; [
         use-package
-	avy
+        which-key
+        avy
+        counsel
+        projectile
+        counsel-projectile
+        magit
+	hydra
       ]) ++ (with epkgs.orgPackages; [
         org-plus-contrib
       ]);
