@@ -29,12 +29,38 @@ in {
         projectile
         counsel-projectile
         magit
-	hydra
+	      hydra
+	      spacemacs-theme
+	      moe-theme
+	      material-theme
+	      nix-mode
+	      gitignore-mode
+	      gitconfig-mode
+	      treemacs
+        treemacs-projectile
+        treemacs-magit
       ]) ++ (with epkgs.orgPackages; [
         org-plus-contrib
       ]);
     };
 
+    home.packages = with pkgs; [
+      python3
+      clang-tools
+    ];
+
     home.file.".emacs.d/init.el".source = ./init.el;
+
+    home.file.".emacs.d/fe-locations.el".text = ''
+      (defconst fe/locs
+        '(python3 "${pkgs.python3}/bin/python3"
+          clangd "${pkgs.clang-tools}/bin/clangd"))
+      (defun fe/get-loc (sym)
+        (plist-get fe/locs sym))
+      (defmacro fe/get-locq (sym)
+        `(fe/get-loc ',sym))
+
+      (provide 'fe-locations)
+    '';
   };
 }

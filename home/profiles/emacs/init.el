@@ -1,9 +1,26 @@
 ;; -*- lexical-binding: t -*-
 
+(setq ring-bell-function 'ignore)
+
+(blink-cursor-mode -1)
+
+(fset 'yes-or-no-p 'y-or-n-p)
+
+(set-language-environment "UTF-8")
+
 (when (display-graphic-p)
+  (menu-bar-mode -1)
   (tool-bar-mode -1)
   (scroll-bar-mode -1))
 
+(show-paren-mode 1)
+(setq show-paren-style 'expression
+      show-paren-delay 0)
+
+(add-to-list 'default-frame-alist
+             '(font . "Fira Mono 11"))
+
+(load (concat user-emacs-directory "fe-locations.el"))
 (require 'package)
 
 (setq package-archives nil)
@@ -54,3 +71,55 @@
   (setq ivy-display-style 'fancy))
 
 (use-package magit)
+
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
+(use-package cmake-mode
+  :mode ("CMakeLists.txt" "\\.cmake\\'"))
+
+(use-package gitignore-mode
+  :mode "\.gitignore")
+
+(use-package gitconfig-mode
+  :mode "\.gitconfig")
+
+(use-package treemacs)
+
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
+(use-package treemacs-magit
+  :after (treemacs magit))
+
+;; load a selection of themes
+(use-package moe-theme
+  :defer t)
+(use-package spacemacs-theme
+  :defer t
+  :init
+  (load-theme 'spacemacs-dark t))
+(use-package material-theme
+  :defer t)
+
+(use-package hydra
+  :config
+  (defun fe/disable-all-themes ()
+    (interactive)
+    (mapc #'disable-theme custom-enabled-themes))
+  (defhydra fe/themes-hydra (:hint nil :color pink)
+    "
+Themes
+
+^Spacemacs^   ^Moe^       ^Material^
+_s_: Dark     _m_: Dark   _a_: Dark    _DEL_: none
+_S_: Light    _M_: Light  _A_: Light
+"
+    ("s" (load-theme 'spacemacs-dark t))
+    ("S" (load-theme 'spacemacs-light t))
+    ("m" (load-theme 'moe-dark t))
+    ("M" (load-theme 'moe-light t))
+    ("a" (load-theme 'material t))
+    ("A" (load-theme 'material-light t))
+    ("DEL" (fe/disable-all-themes))
+    ("RET" nil "done" :color blue)))
