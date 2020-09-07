@@ -67,7 +67,8 @@
   (setq ivy-use-virtual-buffers t)
   (setq ivy-height 20)
   (setq ivy-count-format "(%d/%d) ")
-  (setq ivy-display-style 'fancy))
+  (setq ivy-display-style 'fancy)
+  (setq projectile-completion-system 'ivy))
 
 (use-package magit)
 
