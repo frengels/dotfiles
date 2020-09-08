@@ -72,6 +72,41 @@
 
 (use-package magit)
 
+(defvar evil-leader-map (make-sparse-keymap))
+
+(use-package evil
+  :functions (evil-global-set-key)
+  :init
+  (setq evil-want-integration t ; both settings required for evil-collection
+	evil-want-keybinding nil)
+  (evil-mode)
+  :config
+  (evil-global-set-key 'motion (kbd ";") #'evil-ex)
+  (evil-global-set-key 'motion (kbd ":") #'evil-repeat-find-char))
+
+(use-package evil-magit
+  :after (evil magit))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package key-chord
+  :init
+  (setq key-chord-two-keys-delay 0.1)
+  (setq key-chord-one-key-delay 0.2)
+  :config
+  (key-chord-mode 1)
+  (key-chord-define evil-insert-state-map "fd" #'evil-normal-state))
+
+(use-package company
+  :defer 3
+  :config
+  (setq company-minimum-prefix-length 1)
+  :hook
+  (after-init . global-company-mode))
+
 (use-package nix-mode
   :mode "\\.nix\\'")
 

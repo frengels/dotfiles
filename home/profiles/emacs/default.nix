@@ -38,6 +38,14 @@ in {
           treemacs
           treemacs-projectile
           treemacs-magit
+
+          evil
+          evil-collection
+          evil-magit
+
+          key-chord
+
+          company
         ]) ++ (with epkgs.orgPackages; [ org-plus-contrib ]);
     };
 
