@@ -16,14 +16,14 @@ let
             networking.hostName = hostName;
 	    nix.nixPath = let path = toString ../.; in
 	      [
-	        "nixpkgs=${inputs.nixpkgs}"
-		"nixos=${inputs.nixos-unstable}"
+	        "nixpkgs=${inputs.self}"
+		"nixos=${inputs.nixos-unstable-small}"
 		"nixos-config=${path}/configuration.nix"
 		"nixpkgs-overlay=${path}/overlays"
               ];
 
 	    nix.registry = {
-	      nixos.flake = inputs.nixos-unstable;
+	      nixos.flake = inputs.nixos-unstable-small;
 	      nixpkgs.flake = inputs.nixpkgs;
 	      self.flake = inputs.self;
 	    };
