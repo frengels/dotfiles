@@ -72,6 +72,10 @@
 
 (use-package magit)
 
+(use-package smooth-scrolling
+  :config
+  (smooth-scrolling-mode 1))
+
 (defvar evil-leader-map (make-sparse-keymap))
 
 (use-package evil
