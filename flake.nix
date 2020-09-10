@@ -70,8 +70,8 @@
         inherit system config;
 
 	overlays = (attrValues inputs.self.overlays) ++ [
-	  # (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
-	  # (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
+	  (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
+	  (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
 	  (import inputs.mozilla)
 	  inputs.nix.overlay
 	  inputs.emacs.overlay
