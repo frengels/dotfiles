@@ -23,7 +23,9 @@ in {
           use-package
           which-key
           avy
+          ivy
           counsel
+          swiper
           projectile
           counsel-projectile
           magit
@@ -32,12 +34,16 @@ in {
           spacemacs-theme
           moe-theme
           material-theme
+          doom-themes
+          leuven-theme
           nix-mode
           gitignore-mode
           gitconfig-mode
+          gitattributes-mode
           treemacs
           treemacs-projectile
           treemacs-magit
+          smooth-scrolling
 
           evil
           evil-collection
@@ -46,6 +52,25 @@ in {
           key-chord
 
           company
+
+          ripgrep
+          flycheck
+          git-commit
+          yasnippet
+          smartparens
+          ace-window
+          goto-chg
+          powerline
+          doom-modeline
+          flx
+
+          markdown-mode
+          rust-mode
+
+          lsp-mode
+          lsp-ui
+          golden-ratio
+          git-timemachine
         ]) ++ (with epkgs.orgPackages; [ org-plus-contrib ]);
     };
 
