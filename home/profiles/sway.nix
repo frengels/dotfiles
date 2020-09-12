@@ -119,7 +119,7 @@ in {
           "*" = {
             xkb_layout = "usx,usx";
             xkb_variant = "intl,cmk_dhm";
-            xkb_options = "ctrl:nocaps,grp:win_space_toggle";
+            xkb_options = "grp:shifts_toggle,grp_led:caps";
           };
         };
         output = {
