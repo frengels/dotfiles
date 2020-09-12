@@ -12,6 +12,8 @@ in {
       fira-mono
     ];
 
+    home.file.".xkb/symbols/usx".source = ../../data/keyboard/usx;
+
     wayland.windowManager.sway = {
       enable = true;
 
@@ -115,8 +117,9 @@ in {
             natural_scroll = "enabled";
           };
           "*" = {
-            xkb_layout = "us";
-            xkb_options = "ctrl:nocaps";
+            xkb_layout = "usx,usx";
+            xkb_variant = "intl,cmk_dhm";
+            xkb_options = "ctrl:nocaps,grp:win_space_toggle";
           };
         };
         output = {
