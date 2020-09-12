@@ -8,9 +8,6 @@
     home.url = "github:rycee/home-manager";
     home.inputs.nixpkgs.follows = "nixos-unstable-small";
 
-    emacs-dotfiles.url = "github:dreyri/dot-emacs-d";
-    emacs-dotfiles.inputs.nixpgs.follows = "nixos-unstable-small";
-
     nix.url = "github:NixOS/nix/master";
     nix.inputs.nixpkgs.follows = "nixos-unstable-small";
 
@@ -70,8 +67,8 @@
         inherit system config;
 
 	overlays = (attrValues inputs.self.overlays) ++ [
-	  (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
-	  (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
+	  # (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
+	  # (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
 	  (import inputs.mozilla)
 	  inputs.nix.overlay
 	  inputs.emacs.overlay
