@@ -12,6 +12,7 @@ in {
       fira-mono
     ];
 
+    # TODO: move this to /etc/xkb to make the layout globaly available
     home.file.".config/xkb/symbols/usx".source = ../../data/keyboard/usx;
 
     wayland.windowManager.sway = {
