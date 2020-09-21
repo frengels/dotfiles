@@ -12,7 +12,7 @@ in {
       fira-mono
     ];
 
-    home.file.".xkb/symbols/usx".source = ../../data/keyboard/usx;
+    home.file.".config/xkb/symbols/usx".source = ../../data/keyboard/usx;
 
     wayland.windowManager.sway = {
       enable = true;
