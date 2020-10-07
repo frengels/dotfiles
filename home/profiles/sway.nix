@@ -118,9 +118,12 @@ in {
             natural_scroll = "enabled";
           };
           "*" = {
-            xkb_layout = "usx,usx";
-            xkb_variant = "intl,cmk_dhm";
-            xkb_options = "grp:shifts_toggle,grp_led:caps";
+	    xkb_layout = "us,us";
+	    xkb_variant = "altgr-intl,carpalx-altgr-intl";
+	    xkb_options = "grp:win_space_toggle,grp_led:caps,ctrl:nocaps";
+            # xkb_layout = "usx,usx";
+            # xkb_variant = "intl,cmk_dhm";
+            # xkb_options = "grp:shifts_toggle,grp_led:caps";
           };
         };
         output = {

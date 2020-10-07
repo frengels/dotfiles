@@ -26,6 +26,7 @@ in {
           ivy
           counsel
           swiper
+	  direnv
           projectile
           counsel-projectile
           magit

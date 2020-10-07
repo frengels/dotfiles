@@ -68,6 +68,12 @@ in {
       # temporarily disabled as compiling hogs resources
       # julia # testing out julia for language design
       eternal-terminal
+      vulkan-tools
+      wineWowPackages.unstable
+      unzip
+      patchelf
+      busybox
+      kicad-unstable
     ];
   };
 }

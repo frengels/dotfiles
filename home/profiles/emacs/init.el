@@ -50,6 +50,10 @@
   :config
   (projectile-mode))
 
+(use-package direnv
+  :config
+  (direnv-mode))
+
 (use-package counsel-projectile
   :demand t
   :after (counsel projectile)
