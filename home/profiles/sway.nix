@@ -12,8 +12,8 @@ in {
       fira-mono
     ];
 
-    # TODO: move this to /etc/xkb to make the layout globaly available
-    home.file.".config/xkb/symbols/usx".source = ../../data/keyboard/usx;
+    # remove this once xkbcommon support /etc/xkb
+    home.file.".config/xkb/symbols/colemak".source = ../../data/keyboard/symbols/colemak;
 
     wayland.windowManager.sway = {
       enable = true;
@@ -118,12 +118,9 @@ in {
             natural_scroll = "enabled";
           };
           "*" = {
-	    xkb_layout = "us,us";
-	    xkb_variant = "altgr-intl,carpalx-altgr-intl";
+	    xkb_layout = "us,colemak";
+	    xkb_variant = "altgr-intl,dhm-altgr-intl";
 	    xkb_options = "grp:win_space_toggle,grp_led:caps,ctrl:nocaps";
-            # xkb_layout = "usx,usx";
-            # xkb_variant = "intl,cmk_dhm";
-            # xkb_options = "grp:shifts_toggle,grp_led:caps";
           };
         };
         output = {

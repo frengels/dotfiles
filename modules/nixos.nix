@@ -1,3 +1,3 @@
 [
-  # no modules yet
+  ./services/colemak
 ]

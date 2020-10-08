@@ -24,6 +24,8 @@
 
   hardware.nvidiaOptimus.disable = true;
 
+  services.colemak.enable = true;
+
   hardware.opengl = {
     enable = true;
     driSupport = true;
