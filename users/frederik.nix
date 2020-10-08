@@ -72,7 +72,6 @@ in {
       wineWowPackages.unstable
       unzip
       patchelf
-      busybox
       kicad-unstable
     ];
   };
