@@ -70,8 +70,10 @@ in {
 
           lsp-mode
           lsp-ui
+          company-lsp
           golden-ratio
           git-timemachine
+	  ccls
         ]) ++ (with epkgs.orgPackages; [ org-plus-contrib ]);
     };
 
@@ -81,6 +83,7 @@ in {
       cmake
       nixfmt
       cmake-format
+      ccls
     ];
 
     home.file.".emacs.d/init.el".source = ./init.el;

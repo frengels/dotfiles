@@ -147,6 +147,19 @@
 
 (use-package format-all)
 
+(use-package lsp-mode
+  :commands lsp
+  :init
+  (setq lsp-prefer-flymake nil))
+
+(use-package company-lsp
+  :commands company-lsp)
+
+(use-package ccls
+  :hook
+  ((c-mode c++-mode objc-mode cuda-mode)
+   (lambda () (require 'ccls) (lsp))))
+
 (use-package hydra
   :config
   (defun fe/disable-all-themes ()
