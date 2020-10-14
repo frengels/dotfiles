@@ -73,6 +73,8 @@ in {
       unzip
       patchelf
       kicad-unstable
+      librepcb
+      ccls
     ];
   };
 }
