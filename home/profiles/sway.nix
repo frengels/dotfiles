@@ -120,7 +120,7 @@ in {
           "*" = {
 	    xkb_layout = "us,colemak";
 	    xkb_variant = "altgr-intl,dhm-altgr-intl";
-	    xkb_options = "grp:win_space_toggle,grp_led:caps,ctrl:nocaps";
+	    xkb_options = "grp:win_space_toggle,grp_led:caps,ctrl:nocaps,compose:ralt";
           };
         };
         output = {
