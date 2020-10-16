@@ -20,6 +20,13 @@
 (add-to-list 'default-frame-alist
              '(font . "Fira Mono 11"))
 
+(setq create-lockfiles nil)
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" . ,temporary-file-directory)))
+
 (require 'package)
 
 (setq package-archives nil)
