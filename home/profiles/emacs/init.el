@@ -25,7 +25,7 @@
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-      `((".*" . ,temporary-file-directory t)))
+      `((".*" ,temporary-file-directory t)))
 
 (require 'package)
 
@@ -164,7 +164,7 @@
 
 (use-package ccls
   :hook
-  ((c-mode c++-mode objc-mode cuda-mode)
+  ((c-mode c++-mode objc-mode cuda-mode) .
    (lambda () (require 'ccls) (lsp))))
 
 (use-package hydra
