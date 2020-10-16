@@ -25,7 +25,7 @@
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
-      `((".*" . ,temporary-file-directory)))
+      `((".*" . ,temporary-file-directory t)))
 
 (require 'package)
 
