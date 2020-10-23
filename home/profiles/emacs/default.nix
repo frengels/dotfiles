@@ -53,6 +53,7 @@ in {
           key-chord
 
           company
+          company-emoji
 
           ripgrep
           flycheck
@@ -83,7 +84,6 @@ in {
       cmake
       nixfmt
       cmake-format
-      ccls
     ];
 
     home.file.".emacs.d/init.el".source = ./init.el;

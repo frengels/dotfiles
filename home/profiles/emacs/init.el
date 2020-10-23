@@ -157,15 +157,24 @@
 (use-package lsp-mode
   :commands lsp
   :init
-  (setq lsp-prefer-flymake nil))
+  (setq lsp-prefer-flymake nil)
+  :hook
+  ((c-mode c++-mode objc-mode cuda-mode) .
+   (lambda () (require 'lsp-clangd) (lsp))))
 
 (use-package company-lsp
   :commands company-lsp)
 
-(use-package ccls
-  :hook
-  ((c-mode c++-mode objc-mode cuda-mode) .
-   (lambda () (require 'ccls) (lsp))))
+;(use-package ccls
+  ;:disabled t
+  ;:hook
+  ;((c-mode c++-mode objc-mode cuda-mode) .
+   ;(lambda () (require 'ccls) (lsp))))
+
+(use-package company-emoji
+  :disabled t
+  :init
+  (add-to-list 'company-backend 'company-emoji))
 
 (use-package hydra
   :config

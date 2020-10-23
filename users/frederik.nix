@@ -74,7 +74,6 @@ in {
       patchelf
       kicad-unstable
       librepcb
-      ccls
     ];
   };
 }
