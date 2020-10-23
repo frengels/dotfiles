@@ -10,6 +10,7 @@ let
       modules =
         let
 	  inherit (inputs.home.nixosModules) home-manager;
+	  inherit (inputs.dwarffs.nixosModules) dwarffs;
 	  core = inputs.self.nixosModules.profiles.core;
 
 	  global = {
