@@ -74,6 +74,7 @@ in {
       patchelf
       kicad-unstable
       librepcb
+      eagle
       anki
     ];
   };
