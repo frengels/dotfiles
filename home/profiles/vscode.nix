@@ -45,7 +45,8 @@ in {
         redhat.vscode-yaml
         ms-vscode-remote.remote-ssh
         ms-python.python
-        matklad.rust-analyzer
+	# takes a lot of time to compile
+        # matklad.rust-analyzer
         llvm-org.lldb-vscode
         james-yu.latex-workshop
 	vscode-clangd
