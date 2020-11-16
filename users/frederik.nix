@@ -25,6 +25,11 @@ in {
 
     programs.home-manager.enable = true;
 
+    qt = {
+      enable = true;
+      platformTheme = "gnome";
+    };
+
     profiles = {
       git = {
         enable = true;
@@ -53,6 +58,7 @@ in {
       fish.enable = true;
       frederik-ssh.enable = true;
       emacs.enable = true;
+      emacs.package = pkgs.emacsGcc;
     };
 
     home.packages = with pkgs; [
