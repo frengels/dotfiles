@@ -197,3 +197,5 @@ _S_: Light    _M_: Light  _A_: Light
     ("A" (load-theme 'material-light t))
     ("DEL" (fe/disable-all-themes))
     ("RET" nil "done" :color blue)))
+
+(setq warning-suppress-types '((comp)))
