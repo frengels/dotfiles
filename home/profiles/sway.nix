@@ -21,6 +21,7 @@ in {
       systemdIntegration = true;
 
       extraSessionCommands = ''
+        export NO_AT_BRIDGE=1
         export SDL_VIDEODRIVER=wayland
         export QT_QPA_PLATFORM=wayland-egl
         export CLUTTER_BACKEND=wayland
