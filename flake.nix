@@ -2,7 +2,7 @@
   inputs = {
     nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-unstable-small.url = "github:NixOS/nixpkgs/nixos-unstable-small";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-20.03";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-20.09";
     nixpkgs.url = "github:NixOS/nixpkgs/master";
 
     home.url = "github:rycee/home-manager";
@@ -42,9 +42,9 @@
       };
 
       channels = with inputs; {
-        pkgs = nixos-unstable-small;
-	modules = nixos-unstable-small;
-	lib = nixpkgs;
+        pkgs = inputs.nixos-unstable;
+	modules = inputs.nixos-unstable;
+	lib = inputs.nixpkgs;
       };
 
       inherit (channels.lib) lib;
@@ -66,14 +66,17 @@
       pkgsForSystem = system: import channels.pkgs rec {
         inherit system config;
 
-	overlays = (attrValues inputs.self.overlays) ++ [
-	  # (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
-	  # (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
-	  (import inputs.mozilla)
-	  inputs.nix.overlay
+        overlays = (attrValues inputs.self.overlays) ++ 
+        [
+	  (channelToOverlay { inherit system config; flake = "nixpkgs"; branch = "master"; })
+	  (channelToOverlay { inherit system config; flake = "nixos-unstable-small"; branch = "nixos-unstable-small"; })
+	  (channelToOverlay { inherit system config; flake = "nixos-unstable"; branch = "nixos-unstable"; })
+	  (channelToOverlay { inherit system config; flake = "nixos-stable"; branch = "nixos-20.09"; })
+
 	  inputs.emacs.overlay
-	  inputs.wayland.overlay
-	  inputs.self.overlay
+          (import inputs.mozilla)
+          inputs.nix.overlay
+          inputs.self.overlay
 	];
       };
 
@@ -85,7 +88,7 @@
     in {
       nixosConfigurations =
         let
-	  pkgs = pkgsForSystem system;
+	 pkgs = pkgsForSystem system;
 	in
         import ./hosts {
 	  inherit lib system utils pkgs inputs;
