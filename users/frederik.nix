@@ -25,11 +25,6 @@ in {
 
     programs.home-manager.enable = true;
 
-    qt = {
-      enable = true;
-      platformTheme = "gnome";
-    };
-
     profiles = {
       git = {
         enable = true;
@@ -82,6 +77,14 @@ in {
       librepcb
       eagle
       anki
+      cargo
+      rustc
+      gcc
+      binutils
+      ninja
+      cmake
+      meson
+      gnumake
     ];
   };
 }
