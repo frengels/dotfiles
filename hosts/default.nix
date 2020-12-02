@@ -15,6 +15,13 @@ let
 
 	  global = {
             networking.hostName = hostName;
+
+            qt5 = {
+              enable = true;
+	      platformTheme = "gnome";
+	      style = "adwaita";
+	    };
+
 	    nix = {
 	      package = pkgs.nixFlakes;
 	      allowedUsers = [ "*" ];
