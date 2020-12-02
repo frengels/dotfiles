@@ -33,6 +33,26 @@ in {
         terminal = "${pkgs.termite}/bin/termite";
         menu = "${pkgs.bemenu}/bin/bemenu-run";
         modifier = "Mod4";
+
+	keycodebindings = let 
+	  cfg = config.wayland.windowManager.sway.config;
+	  mod = cfg.modifier;
+	  left = "43"; # h
+	  down = "44"; # j
+	  up = "45"; # k
+	  right = "46"; # l
+	in {
+	  "${mod}+${left}" = "focus left";
+	  "${mod}+${down}" = "focus down";
+	  "${mod}+${up}" = "focus up";
+	  "${mod}+${right}" = "focus right";
+
+	  "${mod}+Shift+${left}" = "move left";
+	  "${mod}+Shift+${down}" = "move down";
+	  "${mod}+Shift+${up}" = "move up";
+	  "${mod}+Shift+${right}" = "move right";
+	};
+
         keybindings = let cfg = config.wayland.windowManager.sway.config; mod = cfg.modifier; in {
 
           #"XF86MonBrightnessUp" = "exec ${pkgs.light}/bin/light -A 5";
@@ -46,20 +66,20 @@ in {
           "${mod}+Shift+q" = "kill";
           "${mod}+d" = "exec ${cfg.menu}";
 
-          "${mod}+${cfg.left}" = "focus left";
-          "${mod}+${cfg.down}" = "focus down";
-          "${mod}+${cfg.up}" = "focus up";
-          "${mod}+${cfg.right}" = "focus right";
+          #"${mod}+${cfg.left}" = "focus left";
+          #"${mod}+${cfg.down}" = "focus down";
+          #"${mod}+${cfg.up}" = "focus up";
+          #"${mod}+${cfg.right}" = "focus right";
 
           "${mod}+Left" = "focus left";
           "${mod}+Down" = "focus down";
           "${mod}+Up" = "focus up";
           "${mod}+Right" = "focus right";
 
-          "${mod}+Shift+${cfg.left}" = "move left";
-          "${mod}+Shift+${cfg.down}" = "move down";
-          "${mod}+Shift+${cfg.up}" = "move up";
-          "${mod}+Shift+${cfg.right}" = "move right";
+          #"${mod}+Shift+${cfg.left}" = "move left";
+          #"${mod}+Shift+${cfg.down}" = "move down";
+          #"${mod}+Shift+${cfg.up}" = "move up";
+          #"${mod}+Shift+${cfg.right}" = "move right";
 
           "${mod}+Shift+Left" = "move left";
           "${mod}+Shift+Down" = "move down";
