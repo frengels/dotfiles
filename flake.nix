@@ -9,7 +9,7 @@
     home.inputs.nixpkgs.follows = "nixos-unstable-small";
 
     nix.url = "github:NixOS/nix/master";
-    nix.inputs.nixpkgs.follows = "nixos-unstable-small";
+    # nix.inputs.nixpkgs.follows = "nixos-stable";
 
     dwarffs.url = "github:edolstra/dwarffs";
     dwarffs.inputs.nixpkgs.follows = "nixos-unstable-small";
@@ -44,7 +44,7 @@
       channels = with inputs; {
         pkgs = inputs.nixos-unstable;
 	modules = inputs.nixos-unstable;
-	lib = inputs.nixpkgs;
+	lib = inputs.nixos-unstable;
       };
 
       inherit (channels.lib) lib;
